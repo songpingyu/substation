@@ -249,12 +249,36 @@ function DataModelView() {
                   {/* CDC Explanation Box for DO */}
                   {hoveredNode === 'DO' && (
                     <div className="mt-4 border-t border-slate-800 pt-3">
-                      <span className="text-purple-400 font-bold text-xs mb-2 block flex items-center gap-1"><Tag className="w-3 h-3"/> CDC (Common Data Class) 常見類別</span>
-                      <div className="grid grid-cols-2 gap-2 text-xs text-slate-400">
-                        <div className="bg-slate-900 px-2 py-1 rounded"><strong>SPS</strong>: 單點狀態 (如 Loc)</div>
-                        <div className="bg-slate-900 px-2 py-1 rounded"><strong>DPC</strong>: 雙點控制 (如 Pos)</div>
-                        <div className="bg-slate-900 px-2 py-1 rounded"><strong>ACT</strong>: 保護跳脫 (如 Op)</div>
-                        <div className="bg-slate-900 px-2 py-1 rounded"><strong>ASG</strong>: 類比設定 (如 StrVal)</div>
+                      <span className="text-purple-400 font-bold text-xs mb-3 block flex items-center gap-1"><Tag className="w-3 h-3"/> CDC (Common Data Class) 核心類別清單</span>
+                      <div className="grid grid-cols-2 gap-2 text-[11px] text-slate-400 leading-tight">
+                        {/* 狀態類 */}
+                        <div className="bg-slate-900/80 px-2 py-1.5 rounded border border-slate-800/50">
+                          <strong className="text-slate-200">SPS / DPS</strong><br/>單/雙點狀態 (唯讀, 如 Loc)
+                        </div>
+                        <div className="bg-slate-900/80 px-2 py-1.5 rounded border border-slate-800/50">
+                          <strong className="text-slate-200">INS / INC</strong><br/>整數狀態/控制 (如 Mod)
+                        </div>
+                        {/* 控制類 */}
+                        <div className="bg-slate-900/80 px-2 py-1.5 rounded border border-red-900/30">
+                          <strong className="text-red-400">SPC / DPC</strong><br/>單/雙點控制 (高危, 如 Pos)
+                        </div>
+                        {/* 保護類 */}
+                        <div className="bg-slate-900/80 px-2 py-1.5 rounded border border-orange-900/30">
+                          <strong className="text-orange-400">ACT / ACD</strong><br/>保護跳脫/啟動 (如 Op, Str)
+                        </div>
+                        {/* 量測類 */}
+                        <div className="bg-slate-900/80 px-2 py-1.5 rounded border border-emerald-900/30">
+                          <strong className="text-emerald-400">MV / CMV</strong><br/>單/複數量測值 (如 Vol, A)
+                        </div>
+                        {/* 設定類 */}
+                        <div className="bg-slate-900/80 px-2 py-1.5 rounded border border-amber-900/30">
+                          <strong className="text-amber-400">ASG / SPG</strong><br/>類比/單點設定 (如 StrVal)
+                        </div>
+                        {/* 設備資訊類 */}
+                        <div className="bg-slate-900/80 px-2 py-1.5 rounded border border-slate-800/50 col-span-2 flex justify-between">
+                          <span><strong className="text-cyan-400">DPL</strong>: 設備實體銘牌 (如 PhyNam)</span>
+                          <span><strong className="text-cyan-400">SEQ</strong>: 序列測量 (如 SeqA)</span>
+                        </div>
                       </div>
                     </div>
                   )}
