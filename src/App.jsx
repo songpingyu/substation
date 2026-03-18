@@ -75,7 +75,8 @@ function DataModelView() {
     ST: { name: "Status Information", zh: "狀態資訊", type: "唯讀 (ReadOnly)", risk: "低", color: "text-green-400 bg-green-400/10 border-green-400/30", desc: "設備當前狀態。如開關開啟/閉合、保護是否作動。必帶 q (品質) 與 t (時間) 標籤。資安上只能監看。" },
     MX: { name: "Measurands", zh: "量測值", type: "唯讀 (ReadOnly)", risk: "低", color: "text-emerald-400 bg-emerald-400/10 border-emerald-400/30", desc: "類比量測數據。如電壓 11kV、實功 TotW。同樣帶有 q 與 t，屬於持續變動的監控數值。" },
     CO: { name: "Control", zh: "控制命令", type: "可寫入 (Write/Operate)", risk: "極高 (Critical)", color: "text-red-500 bg-red-500/10 border-red-500/30", desc: "對設備下達動作指令。包含 SBOw (Select) 與 Oper (Operate) 機制，需帶入 origin 與 ctlNum。紅隊首要關注目標！" },
-    SP: { name: "Set Point", zh: "設定值", type: "可讀寫 (Read/Write)", risk: "高 (High)", color: "text-orange-400 bg-orange-400/10 border-orange-400/30", desc: "更改保護或運作的門檻。例如修改 PTOC.StrVal.setMag.f (過流啟動門檻)，能造成保護設備失效瞎盲。" },
+    SP: { name: "Set Point", zh: "設定值", type: "可讀寫 (Read/Write)", risk: "高 (High)", color: "text-orange-400 bg-orange-400/10 border-orange-400/30", desc: "系統運行控制點與非保護類的單一設定值。可直接更改設備的控制目標與參數。" },
+    SG: { name: "Setting Group", zh: "設定群組", type: "可讀寫 (Read/Write)", risk: "極高 (Critical)", color: "text-amber-400 bg-amber-400/10 border-amber-400/30", desc: "保護電驛專用的參數群組。修改 PTOC.StrVal.setMag.f (過流門檻) 屬於此類，寫入惡意數值會直接導致保護功能失效瞎盲！" },
     CF: { name: "Configuration", zh: "配置參數", type: "可讀寫 (Read/Write)", risk: "中高", color: "text-yellow-400 bg-yellow-400/10 border-yellow-400/30", desc: "改變節點的運作行為設定。例如修改 ctlModel 來降級控制安全性 (把 SBO 改為 direct-with-normal-security)。" }
   };
 
@@ -168,7 +169,7 @@ function DataModelView() {
                           <ComplexTreeNode type="DA" label="general / q / t" desc="綜合跳脫與時標" fc="ST" activeType={hoveredNode} onHover={setHoveredNode} />
                         </ComplexTreeNode>
                         <ComplexTreeNode type="DO" label="StrVal" desc="瞬時啟動電流門檻" cdc="ASG" activeType={hoveredNode} onHover={setHoveredNode}>
-                          <ComplexTreeNode type="DA" label="setMag.f" desc="門檻設定值 (浮點數)" fc="SP" activeType={hoveredNode} onHover={setHoveredNode} />
+                          <ComplexTreeNode type="DA" label="setMag.f" desc="門檻設定值 (浮點數)" fc="SG" activeType={hoveredNode} onHover={setHoveredNode} />
                         </ComplexTreeNode>
                       </ComplexTreeNode>
 
@@ -182,7 +183,7 @@ function DataModelView() {
                           <ComplexTreeNode type="DA" label="general / q / t" desc="綜合跳脫與時標" fc="ST" activeType={hoveredNode} onHover={setHoveredNode} />
                         </ComplexTreeNode>
                         <ComplexTreeNode type="DO" label="StrVal" desc="保護啟動電流門檻" cdc="ASG" activeType={hoveredNode} onHover={setHoveredNode}>
-                          <ComplexTreeNode type="DA" label="setMag.f" desc="門檻設定值 (浮點數)" fc="SP" activeType={hoveredNode} onHover={setHoveredNode} />
+                          <ComplexTreeNode type="DA" label="setMag.f" desc="門檻設定值 (浮點數)" fc="SG" activeType={hoveredNode} onHover={setHoveredNode} />
                         </ComplexTreeNode>
                       </ComplexTreeNode>
                     </ComplexTreeNode>
@@ -398,9 +399,9 @@ function DataModelView() {
               </div>
 
               <div className="bg-slate-900 p-3 rounded border-l-2 border-orange-500">
-                <p className="font-bold text-orange-400 mb-1">⚠️ 篡改 SP / CF (設定與配置)</p>
+                <p className="font-bold text-orange-400 mb-1">⚠️ 篡改 SG / SP / CF (設定與配置)</p>
                 <p className="text-slate-400 text-xs">
-                  例如 <code className="text-fuchsia-400 bg-slate-800 px-1">StrVal.setMag</code> 或 <code className="text-yellow-400 bg-slate-800 px-1">ctlModel</code>。修改成功不會馬上爆炸，但會破壞保護邏輯或降級安全性，埋下未爆彈。
+                  例如 <code className="text-amber-400 bg-slate-800 px-1">StrVal.setMag</code> (SG) 或 <code className="text-yellow-400 bg-slate-800 px-1">ctlModel</code> (CF)。修改成功不會馬上爆炸，但會破壞保護邏輯或降級安全性，埋下未爆彈。
                 </p>
               </div>
 
@@ -424,7 +425,7 @@ function DataModelView() {
               <LookupItem pattern="*.mag.f" desc="唯讀量測數值 (浮點)" fc="MX" />
               <LookupItem pattern="*.ctlModel" desc="安全控制模型設定" fc="CF" />
               <LookupItem pattern="*.Oper / SBOw" desc="執行控制操作結構" fc="CO" />
-              <LookupItem pattern="*.setMag.f" desc="保護門檻參數寫入" fc="SP" />
+              <LookupItem pattern="*.setMag.f" desc="保護門檻參數寫入" fc="SG" />
             </div>
           </section>
 
@@ -453,6 +454,7 @@ function ComplexTreeNode({ type, label, desc, fc, cdc, children, onHover, active
     ST: "text-green-400 border-green-500/30 bg-green-500/10",
     CO: "text-red-400 border-red-500/30 bg-red-500/10",
     SP: "text-orange-400 border-orange-500/30 bg-orange-500/10",
+    SG: "text-amber-400 border-amber-500/30 bg-amber-500/10",
     CF: "text-yellow-400 border-yellow-500/30 bg-yellow-500/10",
     DC: "text-slate-400 border-slate-500/30 bg-slate-500/10"
   };
