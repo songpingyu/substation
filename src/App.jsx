@@ -1,54 +1,103 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { flushSync } from 'react-dom';
 import { 
   ShieldAlert, ShieldCheck, Sliders, Activity, Cpu, 
   Zap, Power, Network, BookOpen, Layers, HardDrive, 
   Radio, Info, ArrowDownUp, SplitSquareVertical,
   Cloud, Server, Monitor, 
-  Database, Target, Terminal, Box, Tag, Key, AlertTriangle, Eye, ChevronRight
+  Database, Target, Terminal, Box, Tag, Key, AlertTriangle, Eye, ChevronRight,
+  Rss, FlaskConical
 } from 'lucide-react';
+import ReportView from './views/ReportView.jsx';
+import LabCaseView from './views/LabCaseView.jsx';
 
 // ==========================================
 // Main Application Wrapper (Tab Navigation)
 // ==========================================
+const TABS = [
+  { id: 'topology', label: '實體網路拓撲', Icon: Network, active: 'bg-indigo-600' },
+  { id: 'datamodel', label: 'IED 資料模型 (Data Model)', Icon: Box, active: 'bg-purple-600' },
+  { id: 'report', label: 'MMS Report 機制', Icon: Rss, active: 'bg-emerald-600' },
+  { id: 'lab', label: 'IEDScout 實測案例', Icon: FlaskConical, active: 'bg-amber-600' },
+];
+const DEFAULT_TAB = 'datamodel';
+
+// URL hash 格式：#<tab> 或 #<tab>/<section>，section 對應頁面上 id="<tab>-<section>" 的元素
+function parseHash(hash) {
+  const raw = (hash || '').replace(/^#\/?/, '');
+  const [tab, section] = raw.split('/');
+  return { tab: TABS.some((t) => t.id === tab) ? tab : null, section: section || null };
+}
+
+function scrollToSection(tab, section) {
+  const el = section ? document.getElementById(`${tab}-${section}`) : null;
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  else window.scrollTo({ top: 0 });
+}
+
 export default function App() {
-  const [activeTab, setActiveTab] = useState('datamodel'); // 'topology' | 'datamodel'
+  const [activeTab, setActiveTab] = useState(() => parseHash(window.location.hash).tab || DEFAULT_TAB);
+
+  useEffect(() => {
+    const onHashChange = () => {
+      const { tab, section } = parseHash(window.location.hash);
+      if (!tab) return;
+      flushSync(() => setActiveTab(tab));
+      scrollToSection(tab, section);
+    };
+    const initial = parseHash(window.location.hash);
+    if (initial.tab && initial.section) scrollToSection(initial.tab, initial.section);
+    window.addEventListener('hashchange', onHashChange);
+    return () => window.removeEventListener('hashchange', onHashChange);
+  }, []);
+
+  const selectTab = (id) => {
+    if (window.location.hash === `#${id}`) {
+      window.scrollTo({ top: 0 });
+      return;
+    }
+    window.location.assign(`#${id}`);
+  };
 
   return (
     <div className="min-h-screen bg-slate-950 font-sans">
       {/* Top Navigation Bar */}
-      <div className="sticky top-0 z-50 bg-slate-900 border-b border-slate-700 shadow-lg px-4 md:px-8 flex justify-between items-center h-16">
-        <div className="flex items-center gap-3">
-          <Database className="w-6 h-6 text-indigo-400" />
-          <span className="text-slate-100 font-bold text-lg tracking-wide">IEC 61850 Advanced Dashboard</span>
+      <div className="sticky top-0 z-50 bg-slate-900 border-b border-slate-700 shadow-lg px-3 md:px-8 flex justify-between items-center gap-3 h-16">
+        <div className="flex items-center gap-3 min-w-0">
+          <Database className="w-6 h-6 text-indigo-400 shrink-0" />
+          <span className="text-slate-100 font-bold text-lg tracking-wide hidden sm:inline whitespace-nowrap">IEC 61850 Advanced Dashboard</span>
+          <span className="text-slate-100 font-bold text-base tracking-wide sm:hidden">IEC 61850</span>
         </div>
-        <div className="flex bg-slate-800 p-1 rounded-lg border border-slate-700">
-          <button 
-            onClick={() => setActiveTab('topology')}
-            className={`px-4 py-1.5 rounded-md text-sm font-bold transition-all ${
-              activeTab === 'topology' 
-                ? 'bg-indigo-600 text-white shadow-md' 
-                : 'text-slate-400 hover:text-slate-200 hover:bg-slate-700'
-            }`}
-          >
-            <Network className="w-4 h-4 inline-block mr-2 mb-0.5" />
-            實體網路拓撲
-          </button>
-          <button 
-            onClick={() => setActiveTab('datamodel')}
-            className={`px-4 py-1.5 rounded-md text-sm font-bold transition-all ${
-              activeTab === 'datamodel' 
-                ? 'bg-purple-600 text-white shadow-md' 
-                : 'text-slate-400 hover:text-slate-200 hover:bg-slate-700'
-            }`}
-          >
-            <Box className="w-4 h-4 inline-block mr-2 mb-0.5" />
-            IED 資料模型 (Data Model)
-          </button>
-        </div>
+        <nav className="flex bg-slate-800 p-1 rounded-lg border border-slate-700 gap-0.5" aria-label="主要分頁">
+          {TABS.map((tab) => {
+            const isActive = activeTab === tab.id;
+            return (
+              <button
+                key={tab.id}
+                type="button"
+                onClick={() => selectTab(tab.id)}
+                title={tab.label}
+                aria-label={tab.label}
+                aria-current={isActive ? 'page' : undefined}
+                className={`px-2.5 md:px-3 lg:px-4 py-1.5 rounded-md text-sm font-bold transition-all whitespace-nowrap ${
+                  isActive
+                    ? `${tab.active} text-white shadow-md`
+                    : 'text-slate-400 hover:text-slate-200 hover:bg-slate-700'
+                }`}
+              >
+                <tab.Icon className="w-4 h-4 inline-block lg:mr-2 lg:mb-0.5" />
+                <span className="hidden lg:inline">{tab.label}</span>
+              </button>
+            );
+          })}
+        </nav>
       </div>
 
       {/* View Switcher */}
-      {activeTab === 'topology' ? <TopologyView /> : <DataModelView />}
+      {activeTab === 'topology' && <TopologyView />}
+      {activeTab === 'datamodel' && <DataModelView />}
+      {activeTab === 'report' && <ReportView />}
+      {activeTab === 'lab' && <LabCaseView />}
     </div>
   );
 }
@@ -64,11 +113,11 @@ function DataModelView() {
     IED: { name: "IED (Intelligent Electronic Device)", zh: "智慧電子設備", desc: "最上層的實體裝置，整個資料樹的根節點。一台 IED 可包含多個存取點 (AP)。", ex: "ABB_REX640_1", intuition: "掛在變電站機櫃上、插著網路線的實體保護電驛鐵盒子。" },
     AP: { name: "AP (Access Point) / Server", zh: "存取點與伺服器", desc: "IED 對外的網路通訊端點，運行 MMS Server。透過不同的 AP，IED 可將不同的資料分別送往站控層 (Station Bus) 或過程層 (Process Bus)。", ex: "AccessPoint_1", intuition: "就像是設備的一張實體網卡或一個獨立的通訊服務器 API。" },
     LD: { name: "LD (Logical Device)", zh: "邏輯設備", desc: "將 IED 內的功能進行『虛擬分組』。每個 LD 下方必定包含 LLN0 (全局設定) 與 LPHD (硬體資訊) 兩個專屬節點。", ex: "LD0 (共用), ProtLD (保護)", intuition: "就像電腦裡的 C槽、D槽，用來把不同性質的功能 (保護、控制、量測) 分門別類。" },
-    LN: { name: "LN (Logical Node)", zh: "邏輯節點", desc: "IEC 61850 的核心模組。由 4 個字母組成，首字母代表功能類別 (P=保護, M=量測, X=開關)。LLN0 是該 LD 的大腦。", ex: "XCBR (斷路器), PTOC (過流保護)", intuition: "軟體裡的一個『類別 (Class)』或『微服務』，專門負責一件具體工作。" },
+    LN: { name: "LN (Logical Node)", zh: "邏輯節點", desc: "IEC 61850 的核心模組。由 4 個字母組成，首字母代表功能類別 (P=保護, M=量測, X=開關)。LLN0 是該 LD 的大腦。完整名稱為 prefix + LN class + instance，例如 RESVMMXU1 = RESV (prefix) + MMXU (class) + 1 (instance)。", ex: "XCBR (斷路器), PTOC (過流保護), RESVMMXU1 (殘餘電壓量測)", intuition: "軟體裡的一個『類別 (Class)』或『微服務』，專門負責一件具體工作。" },
     DO: { name: "DO (Data Object)", zh: "資料物件", desc: "邏輯節點下具體的資料群。每個 DO 都綁定一個 CDC (共用資料類別)，CDC 決定了它底下會有哪些標準屬性 (DA)。", ex: "Pos (位置), Str (啟動), Op (跳脫)", intuition: "物件導向裡的『物件變數』，它預載了一組固定格式的屬性。" },
     DA: { name: "DA (Data Attribute)", zh: "資料屬性", desc: "資料樹的最末端，真正攜帶數值的變數。包含 stVal (數值), q (品質), t (時間標籤) 或更複雜的 Oper (操作結構)。", ex: "stVal, q, t, ctlVal", intuition: "最終真正可以讀取 (Read) 或寫入 (Write) 的欄位。它的權限由 FC 決定！" },
-    DS: { name: "DataSet", zh: "資料集", desc: "位於 LLN0 下，將分散在各個 LN/DO/DA 的重要資料『打包』成一個集合，方便一次性傳送。", ex: "DataSet_Events", intuition: "就像是準備要寄出的『包裹清單』，把要監控的變數都放進去。" },
-    CB: { name: "Control Block", zh: "控制區塊", desc: "通訊引擎的發動機。定義 DataSet 中的資料要以什麼條件、什麼協定送出 (例如 URCB/BRCB 用於 MMS，GoCB 用於 GOOSE)。", ex: "BRCB1, GoCB01", intuition: "『包裹派遞規則』。告訴電驛：當數值改變時，請立刻用 GOOSE 廣播出去。" }
+    DS: { name: "DataSet", zh: "資料集", desc: "位於 LLN0 下，將分散在各個 LN/DO/DA 的重要資料『打包』成一個集合，方便一次性傳送。", ex: "DataSet_Events", intuition: "就像是準備要寄出的『包裹清單』，把要監控的變數都放進去。", link: { href: "#report/building-blocks", label: "深入了解：DataSet 與 RCB 如何組成 MMS Report" } },
+    CB: { name: "Control Block", zh: "控制區塊", desc: "通訊引擎的發動機。定義 DataSet 中的資料要以什麼條件、什麼協定送出 (例如 URCB/BRCB 用於 MMS，GoCB 用於 GOOSE)。", ex: "BRCB1, GoCB01", intuition: "『包裹派遞規則』。告訴電驛：當數值改變時，請立刻用 GOOSE 廣播出去。", link: { href: "#report/rcb", label: "深入了解：RCB 屬性、URCB 與 BRCB、啟用流程" } }
   };
 
   const fcDetails = {
@@ -77,7 +126,8 @@ function DataModelView() {
     CO: { name: "Control", zh: "控制命令", type: "可寫入 (Write/Operate)", risk: "極高 (Critical)", color: "text-red-500 bg-red-500/10 border-red-500/30", desc: "對設備下達動作指令。包含 SBOw (Select) 與 Oper (Operate) 機制，需帶入 origin 與 ctlNum。紅隊首要關注目標！" },
     SP: { name: "Set Point", zh: "設定值", type: "可讀寫 (Read/Write)", risk: "高 (High)", color: "text-orange-400 bg-orange-400/10 border-orange-400/30", desc: "系統運行控制點與非保護類的單一設定值。可直接更改設備的控制目標與參數。" },
     SG: { name: "Setting Group", zh: "設定群組", type: "可讀寫 (Read/Write)", risk: "極高 (Critical)", color: "text-amber-400 bg-amber-400/10 border-amber-400/30", desc: "保護電驛專用的參數群組。修改 PTOC.StrVal.setMag.f (過流門檻) 屬於此類，寫入惡意數值會直接導致保護功能失效瞎盲！" },
-    CF: { name: "Configuration", zh: "配置參數", type: "可讀寫 (Read/Write)", risk: "中高", color: "text-yellow-400 bg-yellow-400/10 border-yellow-400/30", desc: "改變節點的運作行為設定。例如修改 ctlModel 來降級控制安全性 (把 SBO 改為 direct-with-normal-security)。" }
+    CF: { name: "Configuration", zh: "配置參數", type: "可讀寫 (Read/Write)", risk: "中高", color: "text-yellow-400 bg-yellow-400/10 border-yellow-400/30", desc: "改變節點的運作行為設定。例如修改 ctlModel 來降級控制安全性 (把 SBO 改為 direct-with-normal-security)。" },
+    DC: { name: "Description", zh: "描述資訊", type: "唯讀 (ReadOnly)", risk: "低", color: "text-slate-300 bg-slate-500/10 border-slate-500/30", desc: "設備自帶的說明文字，例如 d (說明) 與 dU (Unicode 說明)。IEDScout 看到的 VMMXU1.PhV.d 就屬此類，用來辨識訊號意義，純供閱讀，資安上沒有寫入價值。" }
   };
 
   // 安全防護：若 hoveredNode 不存在於 nodeDetails 中，預設顯示 IED
@@ -245,6 +295,14 @@ function DataModelView() {
                     <Info className="w-5 h-5 shrink-0" />
                     <p><strong>工程直覺：</strong>{currentDetails.intuition}</p>
                   </div>
+                  {currentDetails.link && (
+                    <a
+                      href={currentDetails.link.href}
+                      className="flex items-center gap-2 text-sm font-bold text-emerald-300 bg-emerald-500/10 border border-emerald-500/20 p-3 rounded-lg hover:bg-emerald-500/20 transition-colors"
+                    >
+                      <ChevronRight className="w-4 h-4 shrink-0" /> {currentDetails.link.label}
+                    </a>
+                  )}
                   
                   {/* CDC Explanation Box for DO */}
                   {hoveredNode === 'DO' && (
@@ -273,6 +331,11 @@ function DataModelView() {
                         {/* 設定類 */}
                         <div className="bg-slate-900/80 px-2 py-1.5 rounded border border-amber-900/30">
                           <strong className="text-amber-400">ASG / SPG</strong><br/>類比/單點設定 (如 StrVal)
+                        </div>
+                        {/* 三相量測集合 */}
+                        <div className="bg-slate-900/80 px-2 py-1.5 rounded border border-emerald-900/30 col-span-2 flex flex-col sm:flex-row sm:justify-between gap-1">
+                          <span><strong className="text-emerald-400">WYE</strong>: 三相相量集合 phsA / phsB / phsC (如 PhV, A)</span>
+                          <span><strong className="text-emerald-400">DELTA</strong>: 線電壓集合 phsAB / phsBC / phsCA (如 PPV)</span>
                         </div>
                         {/* 設備資訊類 */}
                         <div className="bg-slate-900/80 px-2 py-1.5 rounded border border-slate-800/50 col-span-2 flex justify-between">
@@ -358,8 +421,11 @@ function DataModelView() {
               <LNCard title="CSWI" desc="開關控制器 (含聯鎖邏輯)" target="Pos.ctlVal (下指令會檢查聯鎖)" type="control" />
               <LNCard title="PTOC / PIOC" desc="延時(51)與瞬時(50)過流" target="StrVal (啟動電流門檻), Op (跳脫動作)" type="protect" />
               <LNCard title="PDIF" desc="差動保護" target="Op (跳脫), LinCap (線路容量設定)" type="protect" />
-              <LNCard title="MMXU" desc="三相電力數值量測" target="A.phsA (A相電流), TotW (總實功)" type="monitor" />
+              <LNCard title="MMXU" desc="三相電力數值量測" target="A.phsA (A相電流), PhV / PPV (相/線電壓), TotW (總實功), Hz (頻率)" type="monitor" />
               <LNCard title="LLN0" desc="設備共用大腦" target="Mod (運作模式), Loc (就地/遠方控制)" type="system" />
+              <LNCard title="MSQI" desc="序分量與不平衡量測 (Sequence and Imbalance)" target="SeqA.c1 / c2 / c3 (正/負/零序電流), SeqV (序電壓)" type="monitor" />
+              <LNCard title="SSCBR / SSIMG / SSOPM" desc="Ed.2 監視類 LN：斷路器、絕緣介質、操作機構的狀態監視" target="SSCBR.OpCnt (操作次數), SSIMG.Pres (絕緣氣體壓力)" type="monitor" />
+              <LNCard title="TVTR / TCTR" desc="比壓器 / 比流器節點，過程層 SV 的資料來源" target="VolSv / AmpSv (取樣值 SAV)，多由 MU 發布" type="monitor" />
             </div>
           </section>
 
@@ -844,8 +910,8 @@ function TopologyView() {
                 <GlossaryItem term="DNP3 / IEC 60870-5-104" desc="廣域網 (WAN) 遠動通訊標準，負責將變電站資訊上送至控制中心，具備優秀的斷線暫存與補傳能力。" />
                 <GlossaryItem term="Station Bus (站控層網路)" desc="連接變電站層與間隔層的乙太網路。主要傳輸大容量但即時性要求中等的 MMS 數據，以及間隔間的 GOOSE 閉鎖訊號。" />
                 <GlossaryItem term="Process Bus (過程層網路)" desc="連接間隔層與過程層的網路。頻寬要求極高，專門傳輸不間斷的 SV 數位波形與要求極低延遲 (<3ms) 的 GOOSE 跳脫指令。" />
-                <GlossaryItem term="MMS (Manufacturing Message Spec.)" desc="主從式架構 (Client-Server) 通訊協定。建立在 TCP/IP 上，負責傳遞設備狀態、事件順序紀錄與控制指令。" />
-                <GlossaryItem term="BRCB / URCB" desc="緩衝型 / 非緩衝型報告控制區塊。MMS 中用來定義資料主動上報機制，BRCB 能在斷線時暫存關鍵事件避免遺失。" />
+                <GlossaryItem term="MMS (Manufacturing Message Spec.)" desc="主從式架構 (Client-Server) 通訊協定。建立在 TCP/IP 上，負責傳遞設備狀態、事件順序紀錄與控制指令。" link={{ href: "#report/read-vs-report", label: "延伸閱讀：MMS Read 輪詢與 Report 推送的差別" }} />
+                <GlossaryItem term="BRCB / URCB" desc="緩衝型 / 非緩衝型報告控制區塊。MMS 中用來定義資料主動上報機制，BRCB 能在斷線時暫存關鍵事件避免遺失。" link={{ href: "#report/urcb-brcb", label: "延伸閱讀：URCB 與 BRCB 的差別與 RCB 屬性" }} />
                 <GlossaryItem term="GOOSE" desc="繞過 TCP/IP 直達 MAC 層的群播協定。專為取代傳統銅線接點而生，確保保護跳脫、閉鎖等致命訊號能在幾毫秒內送達。" />
                 <GlossaryItem term="SV / SMV (Sampled Measured Values)" desc="取樣測量值。MAC 層群播協定，MU 依照標準每秒發布數千個數位波形數據包，供保護電驛或電表訂閱分析。" />
                 <GlossaryItem term="Logical Nodes (邏輯節點)" desc="IEC 61850 將設備功能模組化。如 PTOC 直接對應 ANSI 50/51 過流保護，使不同廠牌設備具備統一的資料模型。" />
@@ -937,11 +1003,16 @@ function ConnectionLine({ height, label, color, textColor, textSide = "right", d
   );
 }
 
-function GlossaryItem({ term, desc }) {
+function GlossaryItem({ term, desc, link }) {
   return (
     <div className="bg-white p-4 rounded-lg border border-slate-200 shadow-sm hover:shadow-md transition-shadow">
       <h4 className="text-base font-extrabold text-slate-800 mb-1 border-b border-slate-100 pb-1">{term}</h4>
       <p className="text-sm text-slate-600 leading-relaxed font-medium">{desc}</p>
+      {link && (
+        <a href={link.href} className="inline-flex items-center gap-1 mt-2 text-xs font-bold text-indigo-600 hover:text-indigo-800">
+          {link.label} <ChevronRight className="w-3 h-3" />
+        </a>
+      )}
     </div>
   );
 }
