@@ -20,6 +20,8 @@ import DataTable from '../../components/DataTable.jsx';
 import UnverifiedBadge from '../../components/UnverifiedBadge.jsx';
 import { Code, FcBadge, Pill, Callout } from '../../components/Primitives.jsx';
 
+const LINK_CLASS = 'text-emerald-300 underline underline-offset-2 hover:text-emerald-200';
+
 // ==========================================
 // 5.1 兩個角色
 // ==========================================
@@ -143,7 +145,7 @@ const DESIGN_LIMITS = [
     desc: (
       <>
         IED 最多同時服務幾個 report client，在 SCL 階段即決定，每個 client 佔一個 instance，名額用完就不能再訂閱 (見{' '}
-        <a href="#report/instances" className="text-emerald-300 underline underline-offset-2 hover:text-emerald-200">
+        <a href="#report/instances" className={LINK_CLASS}>
           Instance 概念
         </a>
         )。
@@ -307,8 +309,6 @@ const STANDARD_ROWS = [
   [<Code tone="sky">IEC 62351-4</Code>, <>MMS / ACSE 的認證與 TLS 保護</>],
 ];
 
-const LINK_CLASS = 'text-emerald-300 underline underline-offset-2 hover:text-emerald-200';
-
 export default function ReportDataSet() {
   const [capabilityId, setCapabilityId] = useState(CAPABILITY_OPTIONS[0].id);
   const selected = CAPABILITY_OPTIONS.find((o) => o.id === capabilityId) || CAPABILITY_OPTIONS[0];
@@ -323,7 +323,10 @@ export default function ReportDataSet() {
         en="Two roles"
         intro="Report 的設定分兩個階段、由兩種角色完成：工程階段決定有哪些 DataSet 與 RCB，連線時 client 只負責啟用與微調。"
       >
-        <DataTable columns={['角色', '做什麼', '工具', '時機']} rows={ROLE_ROWS} />
+        <DataTable
+          columns={['角色', { label: '做什麼', cellClassName: 'min-w-56' }, { label: '工具', cellClassName: 'min-w-48' }, '時機']}
+          rows={ROLE_ROWS}
+        />
         <p className="text-xs text-slate-500 mt-3 leading-relaxed">
           RCB 各屬性的意義見{' '}
           <a href="#report/rcb" className={LINK_CLASS}>
@@ -352,7 +355,11 @@ export default function ReportDataSet() {
           下表取自 ABB Relion 的預設分組，用來說明分組邏輯。實驗 IED (<Code>FD11_PMCC</Code>) 的廠牌目前僅由 LN
           與 RCB 的命名風格推測為 ABB Relion <UnverifiedBadge />，實際分組請以 IED properties 或 ICD / CID 為準。
         </Callout>
-        <DataTable columns={['群組', '內容', 'RCB 類型', '典型參數']} rows={GROUP_ROWS} caption="ABB Relion 預設分組 (廠商範例)" />
+        <DataTable
+          columns={['群組', { label: '內容', cellClassName: 'min-w-56' }, 'RCB 類型', '典型參數']}
+          rows={GROUP_ROWS}
+          caption="ABB Relion 預設分組 (廠商範例)"
+        />
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-5">
           <div className="bg-slate-950/60 border border-slate-800 rounded-xl p-4">
             <p className="font-bold text-slate-100 mb-2">分組邏輯</p>
@@ -399,7 +406,11 @@ export default function ReportDataSet() {
         icon={<FileCode className="text-teal-500" />}
         title="SCL Services 判讀"
         en="Reading the Services section"
-        intro="IED 的 ICD / CID 在 <Services> 區段宣告它支援哪些服務能力。下面是一個範例片段，以及判讀重點。"
+        intro={
+          <>
+            IED 的 ICD / CID 在 <Code>{'<Services>'}</Code> 區段宣告它支援哪些服務能力。下面是一個範例片段，以及判讀重點。
+          </>
+        }
       >
         <div className="overflow-x-auto rounded-xl border border-slate-800 bg-slate-950 p-4">
           <pre className="text-xs md:text-sm leading-relaxed font-mono text-emerald-200">
@@ -486,7 +497,9 @@ export default function ReportDataSet() {
 
         {/* 決定部分：用按鈕點選 IED 的能力 */}
         <div className="bg-slate-950/60 border border-slate-800 rounded-xl p-4 md:p-5">
-          <p className="text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-3">IED 的能力 (依 Services 宣告)</p>
+          <p className="text-[11px] font-bold tracking-wider text-slate-500 mb-3">
+            IED 的能力 (依 <Code>{'<Services>'}</Code> 宣告)
+          </p>
           <div className="flex flex-wrap gap-2" role="group" aria-label="選擇 IED 的能力">
             {CAPABILITY_OPTIONS.map((opt) => {
               const active = opt.id === capabilityId;
@@ -542,9 +555,9 @@ export default function ReportDataSet() {
       {/* 7. 紅隊視角 */}
       <SectionCard
         id="report-redteam"
-        icon={<Key className="w-5 h-5 text-red-400" />}
+        icon={<Key className="text-red-400" />}
         title="紅隊視角：Report 服務的攻擊面"
-        en="Red team view"
+        en="Testing notes (red team view)"
         className="relative overflow-hidden bg-slate-950! border-red-900/50! shadow-[0_0_30px_rgba(220,38,38,0.1)]! [&>h2]:text-red-400 [&>h2]:border-red-900/50"
       >
         <div className="absolute top-0 right-0 p-4 opacity-10 pointer-events-none" aria-hidden="true">
@@ -572,7 +585,7 @@ export default function ReportDataSet() {
         en="Standards references"
         intro="本頁提到的名詞與機制，分別定義在以下標準。"
       >
-        <DataTable columns={['標準', '相關內容']} rows={STANDARD_ROWS} />
+        <DataTable columns={[{ label: '標準', cellClassName: 'whitespace-nowrap' }, '相關內容']} rows={STANDARD_ROWS} />
       </SectionCard>
     </>
   );

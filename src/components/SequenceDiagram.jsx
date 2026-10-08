@@ -10,6 +10,7 @@ import { useId } from 'react';
  *   { type: 'loop', label, steps: [...] }                 迴圈或分組框
  * tone: 'client' (靛藍，預設用於由左向右)、'server' (綠，預設用於由右向左)、'neutral'、'danger'
  * dashed: true 代表虛線 (對應 Mermaid 的 -->>，常用於回應或非同步推送)
+ * from / to / over 必須是 participants 的 id，否則在 render 時拋出錯誤，避免畫出看不見的箭頭。
  */
 
 const TONES = {
@@ -58,7 +59,10 @@ export default function SequenceDiagram({ participants, steps, title, className 
   const n = participants.length;
   const xOf = (id) => {
     const i = participants.findIndex((p) => p.id === id);
-    return PAD_X + BOX_W / 2 + Math.max(i, 0) * COL_W;
+    if (i < 0) {
+      throw new Error(`SequenceDiagram: unknown participant "${id}" (from / to / over 必須是 participants 的 id)`);
+    }
+    return PAD_X + BOX_W / 2 + i * COL_W;
   };
   const width = PAD_X * 2 + BOX_W + COL_W * (n - 1);
   const { items, y: yEnd } = layoutSteps(steps, PAD_TOP + BOX_H + 10);

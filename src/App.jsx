@@ -113,7 +113,7 @@ function DataModelView() {
     IED: { name: "IED (Intelligent Electronic Device)", zh: "智慧電子設備", desc: "最上層的實體裝置，整個資料樹的根節點。一台 IED 可包含多個存取點 (AP)。", ex: "ABB_REX640_1", intuition: "掛在變電站機櫃上、插著網路線的實體保護電驛鐵盒子。" },
     AP: { name: "AP (Access Point) / Server", zh: "存取點與伺服器", desc: "IED 對外的網路通訊端點，運行 MMS Server。透過不同的 AP，IED 可將不同的資料分別送往站控層 (Station Bus) 或過程層 (Process Bus)。", ex: "AccessPoint_1", intuition: "就像是設備的一張實體網卡或一個獨立的通訊服務器 API。" },
     LD: { name: "LD (Logical Device)", zh: "邏輯設備", desc: "將 IED 內的功能進行『虛擬分組』。每個 LD 下方必定包含 LLN0 (全局設定) 與 LPHD (硬體資訊) 兩個專屬節點。", ex: "LD0 (共用), ProtLD (保護)", intuition: "就像電腦裡的 C槽、D槽，用來把不同性質的功能 (保護、控制、量測) 分門別類。" },
-    LN: { name: "LN (Logical Node)", zh: "邏輯節點", desc: "IEC 61850 的核心模組。由 4 個字母組成，首字母代表功能類別 (P=保護, M=量測, X=開關)。LLN0 是該 LD 的大腦。完整名稱為 prefix + LN class + instance，例如 RESVMMXU1 = RESV (prefix) + MMXU (class) + 1 (instance)。", ex: "XCBR (斷路器), PTOC (過流保護), RESVMMXU1 (殘餘電壓量測)", intuition: "軟體裡的一個『類別 (Class)』或『微服務』，專門負責一件具體工作。" },
+    LN: { name: "LN (Logical Node)", zh: "邏輯節點", desc: "IEC 61850 的核心模組。由 4 個字母組成，首字母代表功能類別 (P=保護, M=量測, X=開關)。LLN0 是該 LD 的大腦。完整名稱為前綴 (prefix) + LN 類別 (class) + 實例編號 (instance)，例如 RESVMMXU1 = RESV (前綴) + MMXU (類別) + 1 (實例)。", ex: "XCBR (斷路器), PTOC (過流保護), RESVMMXU1 (殘餘電壓量測)", intuition: "軟體裡的一個『類別 (Class)』或『微服務』，專門負責一件具體工作。" },
     DO: { name: "DO (Data Object)", zh: "資料物件", desc: "邏輯節點下具體的資料群。每個 DO 都綁定一個 CDC (共用資料類別)，CDC 決定了它底下會有哪些標準屬性 (DA)。", ex: "Pos (位置), Str (啟動), Op (跳脫)", intuition: "物件導向裡的『物件變數』，它預載了一組固定格式的屬性。" },
     DA: { name: "DA (Data Attribute)", zh: "資料屬性", desc: "資料樹的最末端，真正攜帶數值的變數。包含 stVal (數值), q (品質), t (時間標籤) 或更複雜的 Oper (操作結構)。", ex: "stVal, q, t, ctlVal", intuition: "最終真正可以讀取 (Read) 或寫入 (Write) 的欄位。它的權限由 FC 決定！" },
     DS: { name: "DataSet", zh: "資料集", desc: "位於 LLN0 下，將分散在各個 LN/DO/DA 的重要資料『打包』成一個集合，方便一次性傳送。", ex: "DataSet_Events", intuition: "就像是準備要寄出的『包裹清單』，把要監控的變數都放進去。", link: { href: "#report/building-blocks", label: "深入了解：DataSet 與 RCB 如何組成 MMS Report" } },
@@ -424,8 +424,8 @@ function DataModelView() {
               <LNCard title="MMXU" desc="三相電力數值量測" target="A.phsA (A相電流), PhV / PPV (相/線電壓), TotW (總實功), Hz (頻率)" type="monitor" />
               <LNCard title="LLN0" desc="設備共用大腦" target="Mod (運作模式), Loc (就地/遠方控制)" type="system" />
               <LNCard title="MSQI" desc="序分量與不平衡量測 (Sequence and Imbalance)" target="SeqA.c1 / c2 / c3 (正/負/零序電流), SeqV (序電壓)" type="monitor" />
-              <LNCard title="SSCBR / SSIMG / SSOPM" desc="Ed.2 監視類 LN：斷路器、絕緣介質、操作機構的狀態監視" target="SSCBR.OpCnt (操作次數), SSIMG.Pres (絕緣氣體壓力)" type="monitor" />
-              <LNCard title="TVTR / TCTR" desc="比壓器 / 比流器節點，過程層 SV 的資料來源" target="VolSv / AmpSv (取樣值 SAV)，多由 MU 發布" type="monitor" />
+              <LNCard title="SCBR / SIMG / SOPM" desc="Ed.2 監視類 LN：斷路器、絕緣介質 (氣體)、操作機構的狀態監視；實驗 IED 上顯示為 SSCBR1 / SSIMG1 / SSOPM1 (前綴 S + 類別 + 實例編號)" target="SIMG.Pres (絕緣氣體壓力), SCBR 的操作次數與磨耗等監視值" type="monitor" />
+              <LNCard title="TVTR / TCTR" desc="比壓器 / 比流器節點，過程層 SV 的資料來源，多由合併單元 (Merging Unit, MU) 發布" target="VolSv / AmpSv (取樣值 SAV)" type="monitor" />
             </div>
           </section>
 
@@ -911,7 +911,7 @@ function TopologyView() {
                 <GlossaryItem term="Station Bus (站控層網路)" desc="連接變電站層與間隔層的乙太網路。主要傳輸大容量但即時性要求中等的 MMS 數據，以及間隔間的 GOOSE 閉鎖訊號。" />
                 <GlossaryItem term="Process Bus (過程層網路)" desc="連接間隔層與過程層的網路。頻寬要求極高，專門傳輸不間斷的 SV 數位波形與要求極低延遲 (<3ms) 的 GOOSE 跳脫指令。" />
                 <GlossaryItem term="MMS (Manufacturing Message Spec.)" desc="主從式架構 (Client-Server) 通訊協定。建立在 TCP/IP 上，負責傳遞設備狀態、事件順序紀錄與控制指令。" link={{ href: "#report/read-vs-report", label: "延伸閱讀：MMS Read 輪詢與 Report 推送的差別" }} />
-                <GlossaryItem term="BRCB / URCB" desc="緩衝型 / 非緩衝型報告控制區塊。MMS 中用來定義資料主動上報機制，BRCB 能在斷線時暫存關鍵事件避免遺失。" link={{ href: "#report/urcb-brcb", label: "延伸閱讀：URCB 與 BRCB 的差別與 RCB 屬性" }} />
+                <GlossaryItem term="BRCB / URCB" desc="緩衝型 / 非緩衝型報告控制區塊。MMS 中用來定義資料主動上報機制，BRCB 能在斷線時暫存關鍵事件避免遺失。" link={{ href: "#report/urcb-brcb", label: "延伸閱讀：URCB 與 BRCB 的差別" }} />
                 <GlossaryItem term="GOOSE" desc="繞過 TCP/IP 直達 MAC 層的群播協定。專為取代傳統銅線接點而生，確保保護跳脫、閉鎖等致命訊號能在幾毫秒內送達。" />
                 <GlossaryItem term="SV / SMV (Sampled Measured Values)" desc="取樣測量值。MAC 層群播協定，MU 依照標準每秒發布數千個數位波形數據包，供保護電驛或電表訂閱分析。" />
                 <GlossaryItem term="Logical Nodes (邏輯節點)" desc="IEC 61850 將設備功能模組化。如 PTOC 直接對應 ANSI 50/51 過流保護，使不同廠牌設備具備統一的資料模型。" />

@@ -57,7 +57,7 @@ const POSITIONING_ROWS = [
     '資料模型位置',
     <>
       RCB 掛在 LN 底下 (實務上幾乎都在 <Code>LLN0</Code>)，MMS 物件名稱形如{' '}
-      <Code>FD11_PMCCLD0/LLN0$RP$rcbMeasFlt01</Code> (URCB) 或 <Code>$BR$</Code> (BRCB)。
+      <Code className="break-all">FD11_PMCCLD0/LLN0$RP$rcbMeasFlt01</Code> (URCB) 或 <Code>$BR$</Code> (BRCB)。
       <span className="block mt-1 text-xs text-slate-500">
         本實驗訂閱的 <Code tone="slate">rcbMeasFlt01</Code> 位於 <Code tone="slate">RP</Code> 或{' '}
         <Code tone="slate">BR</Code> 尚未確認 <UnverifiedBadge label="RP 或 BR 未確認" />
@@ -118,7 +118,7 @@ const BUILDING_BLOCKS = [
     icon: <Settings2 className="w-5 h-5 text-teal-400" />,
     title: 'RCB (Report Control Block)',
     tagline: '決定「什麼時候送、怎麼送、送給誰」',
-    body: <>報告控制區塊 (Report Control Block, RCB)，啟用與參數都在這裡設定 (屬性見 3.3)。</>,
+    body: <>報告控制區塊 (Report Control Block, RCB)：啟用與參數都在這裡設定 (屬性見 3.3)。</>,
     link: { href: '#report/rcb', label: 'RCB 屬性 (3.3)' },
     accent: 'bg-teal-500',
   },
@@ -344,18 +344,24 @@ const PAYLOAD_GROUPS_INDEXED = (() => {
 
 // 3.6 URCB vs BRCB
 const URCB_BRCB_COLUMNS = [
-  '項目',
+  { label: '項目', cellClassName: 'whitespace-nowrap' },
   {
     label: (
       <>
-        URCB (Unbuffered, <Code>$RP$</Code>)
+        URCB
+        <span className="block text-[10px] font-normal normal-case tracking-normal whitespace-normal">
+          Unbuffered, <Code>$RP$</Code>
+        </span>
       </>
     ),
   },
   {
     label: (
       <>
-        BRCB (Buffered, <Code>$BR$</Code>)
+        BRCB
+        <span className="block text-[10px] font-normal normal-case tracking-normal whitespace-normal">
+          Buffered, <Code>$BR$</Code>
+        </span>
       </>
     ),
   },
@@ -397,8 +403,8 @@ const URCB_BRCB_ROWS = [
   ],
   [
     'SCL 元素',
-    <Code>{'<ReportControl buffered="false">'}</Code>,
-    <Code>{'<ReportControl buffered="true">'}</Code>,
+    <Code className="break-all">{'<ReportControl buffered="false">'}</Code>,
+    <Code className="break-all">{'<ReportControl buffered="true">'}</Code>,
   ],
 ];
 
@@ -716,10 +722,11 @@ const SCREEN_MAPPING = [
   {
     key: 'empty',
     icon: <Bell className="w-5 h-5 text-amber-400" />,
-    title: '無值的卡片：沒有任何流量',
+    title: '無值的卡片：對應「值沒變：沒有任何流量」',
     body: (
       <>
         無值的卡片對應「值沒變：沒有任何流量」：訂閱後若 GI 沒拿到初值，或成員從未觸發 <Code>dchg</Code>，卡片即一直空著。
+        本實驗中無值卡片的實際原因尚待驗證 <UnverifiedBadge label="原因待驗證" />
       </>
     ),
     links: [
@@ -741,10 +748,10 @@ const TOGGLE_ON = {
 };
 const TOGGLE_OFF = 'bg-slate-950 border-slate-700 text-slate-400 hover:border-slate-500 hover:text-slate-200';
 
-/** 可點選的按鈕群組 (單選)。options: [{ value, label, tone?, icon? }] */
-function ToggleGroup({ label, options, value, onChange }) {
+/** 可點選的按鈕群組 (單選)。options: [{ value, label, tone?, icon? }]；沒有 label 時以 labelledBy 指向外部標題的 id */
+function ToggleGroup({ label, labelledBy, options, value, onChange }) {
   return (
-    <div className="flex flex-wrap items-center gap-2" role="group" aria-label={label}>
+    <div className="flex flex-wrap items-center gap-2" role="group" aria-label={label} aria-labelledby={labelledBy}>
       {label && <span className="text-[11px] font-bold uppercase tracking-wider text-slate-500 mr-1">{label}</span>}
       {options.map((o) => {
         const on = o.value === value;
@@ -767,14 +774,28 @@ function ToggleGroup({ label, options, value, onChange }) {
   );
 }
 
+/** IEDScout 按鈕標籤 (Enable / GI)；沒有對應按鈕時不渲染 */
+function UiPills({ items, className = '' }) {
+  if (items.length === 0) return null;
+  return (
+    <span className={`flex flex-wrap gap-1 ${className}`}>
+      {items.map((u) => (
+        <Pill key={u} tone={u === 'GI' ? 'sky' : 'emerald'}>
+          {u}
+        </Pill>
+      ))}
+    </span>
+  );
+}
+
 /** URCB / BRCB 適用性記號 */
 function Tick({ on }) {
   return on ? (
-    <span className="text-emerald-400 font-black" aria-label="適用">
+    <span role="img" className="text-emerald-400 font-black" aria-label="適用">
       ✓
     </span>
   ) : (
-    <span className="text-slate-700" aria-label="不適用">
+    <span role="img" className="text-slate-700" aria-label="不適用">
       ·
     </span>
   );
@@ -817,6 +838,10 @@ export default function ReportMechanism() {
     return [
       <span className={dim}>
         <Code>{row.name}</Code>
+        <span className="sm:hidden flex gap-1 mt-1">
+          {row.u && <FcBadge fc="RP" />}
+          {row.b && <FcBadge fc="BR" />}
+        </span>
       </span>,
       <span className={`font-mono text-xs text-slate-400 ${dim}`}>{row.type}</span>,
       <span className={dim}>{row.desc}</span>,
@@ -838,10 +863,10 @@ export default function ReportMechanism() {
         icon={<Compass className="text-emerald-500" />}
         title="定位"
         en="Positioning"
-        intro="MMS Report 是 IEC 61850 中 server 主動推送 (push) 資料給 client 的機制。沒有它，client 只能用 MMS Read 輪詢 (polling)；有了它，client 設定好一個 Report Control Block (RCB) 並啟用後，IED 在觸發條件成立時 (值變化、品質變化、週期到期等) 把 DataSet 內容打包成 report 送出。"
+        intro="MMS Report 是 IEC 61850 中 server 主動推送 (push) 資料給 client 的機制。沒有它，client 只能用 MMS Read 輪詢 (polling)；有了它，client 設定好一個報告控制區塊 (Report Control Block, RCB) 並啟用後，IED 在觸發條件成立時 (值變化、品質變化、週期到期等) 把 DataSet 內容打包成 report 送出。"
       >
         <DataTable
-          columns={[{ label: '層次', className: 'w-1/4' }, '內容']}
+          columns={[{ label: '層次', className: 'md:w-1/4' }, '內容']}
           rows={POSITIONING_ROWS}
           caption="MMS Report 在各層次的位置"
         />
@@ -880,7 +905,7 @@ export default function ReportMechanism() {
         icon={<Boxes className="text-teal-500" />}
         title="三個組成要件"
         en="Building blocks"
-        intro="一個能運作的 MMS Report 由三件事組成：送什麼 (DataSet)、何時送怎麼送送給誰 (RCB)、以及觸發條件與夾帶欄位 (TrgOps 與 OptFlds)。"
+        intro="一個能運作的 MMS Report 由三件事組成：送什麼 (DataSet)、何時送、怎麼送、送給誰 (RCB)，以及觸發條件與夾帶欄位 (TrgOps 與 OptFlds)。"
       >
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {BUILDING_BLOCKS.map((b, i) => (
@@ -904,15 +929,26 @@ export default function ReportMechanism() {
         icon={<Settings2 className="text-emerald-500" />}
         title="RCB 屬性"
         en="RCB attributes"
-        intro="RCB 的屬性以 MMS 變數的形式存在：client 用 Write 設定、用 Read 讀回 (見 3.1)。多數屬性 URCB 與 BRCB 共用，少數只屬於其中一種；點選下方按鈕可以只看你關心的那一種。"
+        intro={
+          <>
+            RCB 的屬性以 MMS 變數的形式存在：client 用 Write 設定、用 Read 讀回 (見{' '}
+            <a
+              href="#report/positioning"
+              className="text-emerald-300 underline underline-offset-2 hover:text-emerald-200 transition-colors"
+            >
+              3.1 定位
+            </a>
+            )。多數屬性 URCB 與 BRCB 共用，少數只屬於其中一種；點選下方按鈕可以只看你關心的那一種。
+          </>
+        }
       >
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-4">
           <ToggleGroup label="顯示" options={RCB_VIEW_OPTIONS} value={rcbView} onChange={setRcbView} />
           <ToggleGroup label="不適用的列" options={RCB_MODE_OPTIONS} value={rcbMode} onChange={setRcbMode} />
         </div>
-        <p className="text-xs text-slate-500 mb-3 flex items-center gap-1.5">
+        <p className="text-xs text-slate-500 mb-3 flex flex-wrap items-center gap-1.5">
           <MousePointerClick className="w-3.5 h-3.5" />
-          目前顯示：
+          <span className="whitespace-nowrap">目前顯示：</span>
           {rcbView === 'all' && <span className="text-slate-300 font-bold">全部 {RCB_ROWS.length} 個屬性</span>}
           {rcbView === 'urcb' && (
             <span className="text-indigo-300 font-bold">URCB 適用的 {rcbApplicableCount} 個屬性</span>
@@ -926,11 +962,19 @@ export default function ReportMechanism() {
             '屬性',
             '型別',
             '意義',
-            { label: 'URCB', className: 'text-center', cellClassName: 'text-center' },
-            { label: 'BRCB', className: 'text-center', cellClassName: 'text-center' },
+            {
+              label: 'URCB',
+              className: 'hidden sm:table-cell text-center',
+              cellClassName: 'hidden sm:table-cell text-center',
+            },
+            {
+              label: 'BRCB',
+              className: 'hidden sm:table-cell text-center',
+              cellClassName: 'hidden sm:table-cell text-center',
+            },
           ]}
           rows={rcbRows}
-          caption="RCB 屬性一覽 (✓ = 該類 RCB 具有此屬性)"
+          caption="RCB 屬性一覽 (✓ = 該類 RCB 具有此屬性；窄螢幕改以 RP / BR 標籤標示)"
           dense
         />
       </SectionCard>
@@ -944,10 +988,14 @@ export default function ReportMechanism() {
         intro="TrgOps 是一個 bitstring，決定哪些事件會讓 server 送出 report；OptFlds 也是 bitstring，決定 report 內除了值之外還要多帶哪些欄位。"
       >
         <SubHeading title="觸發條件" en="TrgOps bits" />
-        <DataTable columns={['TrgOps bit', '意義', '備註']} rows={TRGOPS_ROWS} caption="TrgOps 的 5 個 bit" />
+        <DataTable
+          columns={['TrgOps bit', { label: '意義', cellClassName: 'whitespace-nowrap' }, '備註']}
+          rows={TRGOPS_ROWS}
+          caption="TrgOps 各 bit 的意義"
+        />
 
         <SubHeading title="夾帶欄位" en="OptFlds bits" />
-        <DataTable columns={['OptFlds bit', 'report 內多帶的欄位']} rows={OPTFLDS_ROWS} caption="OptFlds 的 9 個 bit" />
+        <DataTable columns={['OptFlds bit', 'report 內多帶的欄位']} rows={OPTFLDS_ROWS} caption="OptFlds 各 bit 對應的欄位" />
       </SectionCard>
 
       {/* 3.5 Report 內容結構 */}
@@ -1037,8 +1085,8 @@ export default function ReportMechanism() {
         </p>
 
         <div className="rounded-xl border border-slate-800 bg-slate-950/60 p-4 md:p-5">
-          <div className="flex flex-col lg:flex-row lg:items-center gap-4">
-            <div className="lg:w-72 shrink-0">
+          <div className="flex flex-col xl:flex-row xl:items-center gap-4">
+            <div className="xl:w-72 shrink-0">
               <div className="text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-2">SCL 寫法</div>
               <pre className="font-mono text-xs md:text-sm text-emerald-300 bg-slate-900 border border-slate-800 rounded-lg p-3 overflow-x-auto">
                 {'<ReportControl name="rcbMeasFlt"\n               max="5">'}
@@ -1047,12 +1095,12 @@ export default function ReportMechanism() {
                 <Code tone="slate">name</Code> 接兩位數 index，展開為 01 到 05
               </div>
             </div>
-            <ArrowRight className="w-6 h-6 text-slate-600 shrink-0 hidden lg:block" />
+            <ArrowRight className="w-6 h-6 text-slate-600 shrink-0 hidden xl:block" />
             <div className="flex-1 min-w-0">
               <div className="text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-2">
                 IED 上的 5 個 instance (示意)
               </div>
-              <div className="grid grid-cols-2 sm:grid-cols-5 gap-2">
+              <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-5 gap-2">
                 {INSTANCES.map((inst) => (
                   <div
                     key={inst.id}
@@ -1084,8 +1132,10 @@ export default function ReportMechanism() {
               </div>
               <p className="text-[11px] text-slate-500 mt-3 leading-relaxed">
                 示意：本實驗的 Activity Monitor 標題列是 <Code tone="slate">rcbMeasFlt01</Code>，右上綠色 ✓ 代表訂閱啟用中
-                (RptEna = true)，即 01 這個 instance 由 IEDScout 佔用；其餘 instance 可供其他 client 使用。實際 instance
-                數以 IED 的 SCL 為準。
+                (RptEna = true)，即 01 這個 instance 由 IEDScout 使用中。圖中 max="5" 與其餘 instance 是否空閒只是示意，
+                本實驗 IED 的 instance 數與各 instance 的 <Code tone="slate">Resv</Code> /{' '}
+                <Code tone="slate">Owner</Code> 尚未讀取 <UnverifiedBadge label="Resv / Owner 未讀取" />，實際以 IED 的 SCL
+                為準。
               </p>
             </div>
           </div>
@@ -1109,19 +1159,16 @@ export default function ReportMechanism() {
             { label: '步驟', className: 'text-center', cellClassName: 'text-center font-mono font-bold text-slate-200' },
             '動作',
             'MMS 層',
-            'IEDScout 按鈕',
+            { label: 'IEDScout 按鈕', className: 'hidden sm:table-cell', cellClassName: 'hidden sm:table-cell' },
           ]}
           rows={ENABLE_STEPS.map((s) => [
             s.step,
-            s.action,
+            <>
+              {s.action}
+              <UiPills items={s.ui} className="sm:hidden mt-1" />
+            </>,
             s.mms,
-            <span className="flex flex-wrap gap-1">
-              {s.ui.map((u) => (
-                <Pill key={u} tone={u === 'GI' ? 'sky' : 'emerald'}>
-                  {u}
-                </Pill>
-              ))}
-            </span>,
+            <UiPills items={s.ui} />,
           ])}
           caption="啟用流程九步驟"
         />
@@ -1179,7 +1226,7 @@ export default function ReportMechanism() {
         />
 
         <SubHeading id="report-read-vs-report-sequence" title="時序圖" en="Sequence diagrams" />
-        <div className="grid grid-cols-1 xl:grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 items-start">
           <SequenceDiagram title="MMS Read 輪詢" participants={POLL_SEQ_PARTICIPANTS} steps={POLL_SEQ_STEPS} />
           <SequenceDiagram title="MMS Report 推送" participants={PUSH_SEQ_PARTICIPANTS} steps={PUSH_SEQ_STEPS} />
         </div>
@@ -1188,9 +1235,12 @@ export default function ReportMechanism() {
         <div className="rounded-xl border border-slate-800 bg-slate-950/60 p-4 mb-4">
           <div className="flex flex-wrap items-center gap-2 mb-2">
             <MousePointerClick className="w-4 h-4 text-teal-400" />
-            <span className="text-sm font-bold text-slate-200">你的情境是？點選後標示對應的做法</span>
+            <span id="report-choice-label" className="text-sm font-bold text-slate-200">
+              你的情境是？點選後標示對應的做法
+            </span>
           </div>
           <ToggleGroup
+            labelledBy="report-choice-label"
             options={CHOICES.map((c) => ({ value: c.value, label: c.scenario, tone: c.tone, icon: c.icon }))}
             value={choice}
             onChange={(v) => setChoice(v === choice ? null : v)}

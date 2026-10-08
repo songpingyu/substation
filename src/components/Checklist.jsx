@@ -25,12 +25,12 @@ function save(key, state) {
  */
 export default function Checklist({ items, storageKey, note = '勾選狀態只存在這台瀏覽器' }) {
   const [done, setDone] = useState(() => (storageKey ? load(storageKey) : {}));
-  const toggle = (id) =>
-    setDone((prev) => {
-      const next = { ...prev, [id]: !prev[id] };
-      if (storageKey) save(storageKey, next);
-      return next;
-    });
+  // localStorage 寫入放在事件處理器，不放進 setState 的 updater (updater 必須是純函式)
+  const toggle = (id) => {
+    const next = { ...done, [id]: !done[id] };
+    setDone(next);
+    if (storageKey) save(storageKey, next);
+  };
   const count = items.filter((i) => done[i.id]).length;
 
   return (
