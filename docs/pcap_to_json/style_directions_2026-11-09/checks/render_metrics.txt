@@ -1,0 +1,71 @@
+done A-light
+done A-dark
+done A-1280
+done B-light
+done B-dark
+done B-1280
+done C-light
+done C-dark
+done C-1280
+done D-light
+done D-dark
+done D-1280
+done E-light
+done E-dark
+done E-1280
+A-light rows {'R': 30, 'nFit': 21, 'first': 36, 'shownFrom': 36, 'shownTo': 67, 'total': 41} errors []
+   hdr.y=194 top=44 filter=40 ov=110 status=32 | tree/list/detail = 230.4/720/489.6 | rowH=30px font=14px
+   fonts ['IBM Plex Sans 400', 'IBM Plex Sans 500', 'IBM Plex Sans 700', 'IBM Plex Mono 400', 'IBM Plex Mono 500', 'Noto Sans TC 400', 'Noto Sans TC 500', 'Noto Sans TC 700', 'B612 400', 'B612 700', 'Red Hat Mono 400', 'Red Hat Mono 700']
+   audit: 435 text elements, min 3.09, fails 0
+A-dark rows {'R': 30, 'nFit': 21, 'first': 36, 'shownFrom': 36, 'shownTo': 67, 'total': 41} errors []
+   hdr.y=194 top=44 filter=40 ov=110 status=32 | tree/list/detail = 230.4/720/489.6 | rowH=30px font=14px
+   fonts ['IBM Plex Sans 400', 'IBM Plex Sans 500', 'IBM Plex Sans 700', 'IBM Plex Mono 400', 'IBM Plex Mono 500', 'Noto Sans TC 400', 'Noto Sans TC 500', 'Noto Sans TC 700', 'B612 400', 'B612 700', 'Red Hat Mono 400', 'Red Hat Mono 700']
+   audit: 435 text elements, min 3.71, fails 0
+A-1280 rows {'R': 30, 'nFit': 18, 'first': 39, 'shownFrom': 39, 'shownTo': 65, 'total': 41} errors []
+   hdr.y=194 top=44 filter=40 ov=110 status=32 | tree/list/detail = 204.8/640/435.2 | rowH=30px font=14px
+   fonts ['IBM Plex Sans 400', 'IBM Plex Sans 500', 'IBM Plex Sans 700', 'IBM Plex Mono 400', 'IBM Plex Mono 500', 'Noto Sans TC 400', 'Noto Sans TC 500', 'Noto Sans TC 700', 'B612 400', 'B612 700', 'Red Hat Mono 400', 'Red Hat Mono 700']
+B-light rows {'R': 22, 'nFit': 31, 'first': 33, 'shownFrom': 33, 'shownTo': 80, 'total': 41} errors []
+   hdr.y=152 top=34 filter=32 ov=86 status=26 | tree/list/detail = 201.6/806.4/432 | rowH=22px font=12.5px
+   fonts ['IBM Plex Sans 400', 'IBM Plex Sans 500', 'IBM Plex Sans 700', 'IBM Plex Mono 400', 'IBM Plex Mono 500', 'Noto Sans TC 400', 'Noto Sans TC 500', 'Noto Sans TC 700', 'Iosevka Aile 400', 'Iosevka Aile 600', 'Iosevka Aile 700', 'Iosevka 400', 'Iosevka 600', 'Iosevka 700']
+   audit: 589 text elements, min 3.27, fails 0
+B-dark rows {'R': 22, 'nFit': 31, 'first': 33, 'shownFrom': 33, 'shownTo': 80, 'total': 41} errors []
+   hdr.y=152 top=34 filter=32 ov=86 status=26 | tree/list/detail = 201.6/806.4/432 | rowH=22px font=12.5px
+   fonts ['IBM Plex Sans 400', 'IBM Plex Sans 500', 'IBM Plex Sans 700', 'IBM Plex Mono 400', 'IBM Plex Mono 500', 'Noto Sans TC 400', 'Noto Sans TC 500', 'Noto Sans TC 700', 'Iosevka Aile 400', 'Iosevka Aile 600', 'Iosevka Aile 700', 'Iosevka 400', 'Iosevka 600', 'Iosevka 700']
+   audit: 589 text elements, min 4.18, fails 0
+B-1280 rows {'R': 22, 'nFit': 27, 'first': 36, 'shownFrom': 36, 'shownTo': 77, 'total': 41} errors []
+   hdr.y=152 top=34 filter=32 ov=86 status=26 | tree/list/detail = 180/716/384 | rowH=22px font=12.5px
+   fonts ['IBM Plex Sans 400', 'IBM Plex Sans 500', 'IBM Plex Sans 700', 'IBM Plex Mono 400', 'IBM Plex Mono 500', 'Noto Sans TC 400', 'Noto Sans TC 500', 'Noto Sans TC 700', 'Iosevka Aile 400', 'Iosevka Aile 600', 'Iosevka Aile 700', 'Iosevka 400', 'Iosevka 600', 'Iosevka 700']
+C-light rows {'R': 30, 'nFit': 21, 'first': 36, 'shownFrom': 36, 'shownTo': 67, 'total': 41} errors []
+   hdr.y=196 top=48 filter=40 ov=108 status=32 | tree/list/detail = 230.4/691.2/518.4 | rowH=30px font=14px
+   fonts ['IBM Plex Sans 400', 'IBM Plex Sans 500', 'IBM Plex Sans 700', 'IBM Plex Mono 400', 'IBM Plex Mono 500', 'Noto Sans TC 400', 'Noto Sans TC 500', 'Noto Sans TC 700', 'Noto Serif TC 700', 'Source Sans 3 400', 'Source Sans 3 600', 'Source Sans 3 700', 'Source Code Pro 400', 'Source Code Pro 600', 'Source Serif 4 600', 'Source Serif 4 700']
+   audit: 435 text elements, min 3.46, fails 0
+C-dark rows {'R': 30, 'nFit': 21, 'first': 36, 'shownFrom': 36, 'shownTo': 67, 'total': 41} errors []
+   hdr.y=196 top=48 filter=40 ov=108 status=32 | tree/list/detail = 230.4/691.2/518.4 | rowH=30px font=14px
+   fonts ['IBM Plex Sans 400', 'IBM Plex Sans 500', 'IBM Plex Sans 700', 'IBM Plex Mono 400', 'IBM Plex Mono 500', 'Noto Sans TC 400', 'Noto Sans TC 500', 'Noto Sans TC 700', 'Noto Serif TC 700', 'Source Sans 3 400', 'Source Sans 3 600', 'Source Sans 3 700', 'Source Code Pro 400', 'Source Code Pro 600', 'Source Serif 4 600', 'Source Serif 4 700']
+   audit: 435 text elements, min 4.13, fails 0
+C-1280 rows {'R': 30, 'nFit': 18, 'first': 39, 'shownFrom': 39, 'shownTo': 65, 'total': 41} errors []
+   hdr.y=196 top=48 filter=40 ov=108 status=32 | tree/list/detail = 204.8/614.4/460.8 | rowH=30px font=14px
+   fonts ['IBM Plex Sans 400', 'IBM Plex Sans 500', 'IBM Plex Sans 700', 'IBM Plex Mono 400', 'IBM Plex Mono 500', 'Noto Sans TC 400', 'Noto Sans TC 500', 'Noto Sans TC 700', 'Noto Serif TC 700', 'Source Sans 3 400', 'Source Sans 3 600', 'Source Sans 3 700', 'Source Code Pro 400', 'Source Code Pro 600', 'Source Serif 4 600', 'Source Serif 4 700']
+D-light rows {'R': 30, 'nFit': 20, 'first': 36, 'shownFrom': 36, 'shownTo': 65, 'total': 41} errors []
+   hdr.y=196 top=46 filter=42 ov=100 status=38 | tree/list/detail = 241.4/690/468.6 | rowH=30px font=13.5px
+   fonts ['IBM Plex Sans 400', 'IBM Plex Sans 500', 'IBM Plex Sans 700', 'IBM Plex Mono 400', 'IBM Plex Mono 500', 'Noto Sans TC 400', 'Noto Sans TC 500', 'Noto Sans TC 700', 'Inter 400', 'Inter 500', 'Inter 600', 'Inter 700', 'Geist Mono 400', 'Geist Mono 500', 'Geist Mono 600']
+   audit: 414 text elements, min 3.23, fails 0
+D-dark rows {'R': 30, 'nFit': 20, 'first': 36, 'shownFrom': 36, 'shownTo': 65, 'total': 41} errors []
+   hdr.y=196 top=46 filter=42 ov=100 status=38 | tree/list/detail = 241.4/690/468.6 | rowH=30px font=13.5px
+   fonts ['IBM Plex Sans 400', 'IBM Plex Sans 500', 'IBM Plex Sans 700', 'IBM Plex Mono 400', 'IBM Plex Mono 500', 'Noto Sans TC 400', 'Noto Sans TC 500', 'Noto Sans TC 700', 'Inter 400', 'Inter 500', 'Inter 600', 'Inter 700', 'Geist Mono 400', 'Geist Mono 500', 'Geist Mono 600']
+   audit: 414 text elements, min 4.56, fails 0
+D-1280 rows {'R': 30, 'nFit': 17, 'first': 40, 'shownFrom': 40, 'shownTo': 65, 'total': 41} errors []
+   hdr.y=196 top=46 filter=42 ov=100 status=38 | tree/list/detail = 214.2/610/415.8 | rowH=30px font=13.5px
+   fonts ['IBM Plex Sans 400', 'IBM Plex Sans 500', 'IBM Plex Sans 700', 'IBM Plex Mono 400', 'IBM Plex Mono 500', 'Noto Sans TC 400', 'Noto Sans TC 500', 'Noto Sans TC 700', 'Inter 400', 'Inter 500', 'Inter 600', 'Inter 700', 'Geist Mono 400', 'Geist Mono 500', 'Geist Mono 600']
+E-light rows {'R': 36, 'nFit': 16, 'first': 42, 'shownFrom': 42, 'shownTo': 65, 'total': 41} errors []
+   hdr.y=224 top=52 filter=48 ov=124 status=44 | tree/list/detail = 259.2/691.2/489.6 | rowH=36px font=15px
+   fonts ['IBM Plex Sans 400', 'IBM Plex Sans 500', 'IBM Plex Sans 700', 'IBM Plex Mono 400', 'IBM Plex Mono 500', 'Noto Sans TC 400', 'Noto Sans TC 500', 'Noto Sans TC 700', 'Atkinson Hyperlegible Next 400', 'Atkinson Hyperlegible Next 600', 'Atkinson Hyperlegible Next 700', 'Atkinson Hyperlegible Next 800', 'Atkinson Hyperlegible Mono 400', 'Atkinson Hyperlegible Mono 600', 'Atkinson Hyperlegible Mono 700', 'Atkinson Hyperlegible Mono 800']
+   audit: 358 text elements, min 8.91, fails 0
+E-dark rows {'R': 36, 'nFit': 16, 'first': 42, 'shownFrom': 42, 'shownTo': 65, 'total': 41} errors []
+   hdr.y=224 top=52 filter=48 ov=124 status=44 | tree/list/detail = 259.2/691.2/489.6 | rowH=36px font=15px
+   fonts ['IBM Plex Sans 400', 'IBM Plex Sans 500', 'IBM Plex Sans 700', 'IBM Plex Mono 400', 'IBM Plex Mono 500', 'Noto Sans TC 400', 'Noto Sans TC 500', 'Noto Sans TC 700', 'Atkinson Hyperlegible Next 400', 'Atkinson Hyperlegible Next 600', 'Atkinson Hyperlegible Next 700', 'Atkinson Hyperlegible Next 800', 'Atkinson Hyperlegible Mono 400', 'Atkinson Hyperlegible Mono 600', 'Atkinson Hyperlegible Mono 700', 'Atkinson Hyperlegible Mono 800']
+   audit: 358 text elements, min 10.37, fails 0
+E-1280 rows {'R': 36, 'nFit': 13, 'first': 46, 'shownFrom': 46, 'shownTo': 65, 'total': 41} errors []
+   hdr.y=224 top=52 filter=48 ov=124 status=44 | tree/list/detail = 230.4/614.4/435.2 | rowH=36px font=15px
+   truncated ['hint ml: 每格 1 s · 拖曳 = 時間篩選']
+   fonts ['IBM Plex Sans 400', 'IBM Plex Sans 500', 'IBM Plex Sans 700', 'IBM Plex Mono 400', 'IBM Plex Mono 500', 'Noto Sans TC 400', 'Noto Sans TC 500', 'Noto Sans TC 700', 'Atkinson Hyperlegible Next 400', 'Atkinson Hyperlegible Next 600', 'Atkinson Hyperlegible Next 700', 'Atkinson Hyperlegible Next 800', 'Atkinson Hyperlegible Mono 400', 'Atkinson Hyperlegible Mono 600', 'Atkinson Hyperlegible Mono 700', 'Atkinson Hyperlegible Mono 800']

@@ -1,0 +1,100 @@
+/* ==========================================================================
+   v2 共用層：把 app.css 裡寫死的尺寸、kind 色、列底色改成變數。
+   預設值 = 目前的畫面（只套這層，畫面應該跟現在一模一樣）。
+   五個方向都建立在這層上面：方向檔只改變數＋少量元件樣式。
+   ========================================================================== */
+:root {
+  /* 版面（與深淺色無關） */
+  --h-top: 44px;        /* 頂欄高度 */
+  --h-filter: 40px;     /* 篩選列高度 */
+  --h-ov: 112px;        /* 總覽帶高度（展開） */
+  --h-ovmini: 28px;     /* 總覽帶高度（收合） */
+  --h-status: 32px;     /* 工具列高度 */
+  --h-bottom: 300px;    /* 底部分頁高度 */
+  --h-ctl: 30px;        /* 一般按鈕 / 篩選框高度 */
+  --h-ctl-sm: 24px;     /* 小按鈕高度（工具列、詳情頭） */
+  --h-chip: 22px;       /* 篩選 chip、計數藥丸高度 */
+  --h-node: 26px;       /* 模型樹一列高度 */
+  --h-hist: 57px;       /* 直方圖繪圖區高度 */
+  --w-tree: 18%;        /* 模型樹欄寬（下限 --w-tree-min） */
+  --w-tree-min: 200px;
+  --w-detail: 32%;      /* 詳情欄寬（下限 --w-detail-min） */
+  --w-detail-min: 320px;
+  --r: 6px;             /* 按鈕、輸入框圓角 */
+  --r-sm: 4px;          /* chip、kchip 圓角 */
+  --r-lg: 10px;         /* 浮出層、對話框圓角 */
+  --u: 4px;             /* 間距單位 */
+  --kind-bar: 3px;      /* 列左邊的 kind 色條寬 */
+  --font-chrome: 13px;  /* 頂欄 / 篩選列按鈕字級 */
+  --font-small: 12px;   /* 計數、chip、提示字級 */
+
+  /* 新的語意色（預設 = 現在的推導方式） */
+  --k-req: var(--info);
+  --k-resp: var(--ok);
+  --k-err: var(--err);
+  --k-rpt: var(--vio);
+  --ctl-bg: color-mix(in srgb, var(--warn) 12%, transparent);
+  --rule-info: color-mix(in srgb, var(--info) 16%, transparent);
+  --rule-ok: color-mix(in srgb, var(--ok) 16%, transparent);
+  --rule-warn: color-mix(in srgb, var(--warn) 18%, transparent);
+  --rule-err: color-mix(in srgb, var(--err) 16%, transparent);
+  --rule-vio: color-mix(in srgb, var(--vio) 16%, transparent);
+  --rule-accent: color-mix(in srgb, var(--accent) 16%, transparent);
+  --sel-bg: var(--nav-active);
+  --sel-edge: transparent;
+  --changed: color-mix(in srgb, var(--err) 14%, transparent);
+  --shadow-pop: 0 1px 2px #00000014, 0 10px 28px #0000002e;
+}
+
+.topbar { height: var(--h-top); gap: calc(var(--u) * 2); }
+.filterbar { height: var(--h-filter); gap: calc(var(--u) * 2); }
+.overview { height: var(--h-ov); }
+.ovmini { height: var(--h-ovmini); }
+.statusbar { height: var(--h-status); gap: calc(var(--u) * 2); }
+.bottom { height: var(--h-bottom); }
+
+.tbtn { height: var(--h-ctl); border-radius: var(--r); font-size: var(--font-chrome); }
+.tbtn.sm { height: var(--h-ctl-sm); font-size: var(--font-small); }
+.tbtn.ib { width: var(--h-ctl); }
+.tbtn.ib.sm { width: var(--h-ctl-sm); }
+.fbox { height: var(--h-ctl); border-radius: var(--r); }
+.fname { height: var(--h-ctl); }
+.pill { height: calc(var(--h-ctl) - 4px); border-radius: calc((var(--h-ctl) - 4px) / 2); }
+.fchip { height: var(--h-chip); border-radius: var(--r); font-size: var(--font-small); }
+.fchip-text { line-height: calc(var(--h-chip) - 2px); }
+.crow, .cnt { height: var(--h-chip); }
+.cnt, .clabel { font-size: var(--font-small); }
+.cnt { border-radius: calc(var(--r) - 1px); }
+.kchip { border-radius: var(--r-sm); }
+.tnode { height: var(--h-node); }
+.hist-plot { height: var(--h-hist); }
+.popover, .menu, .pop { border-radius: var(--r-lg); box-shadow: var(--shadow-pop); }
+
+.workspace.with-detail { grid-template-columns: minmax(0, 1fr) minmax(var(--w-detail-min), calc(var(--w-detail) + 2%)); }
+.workspace.with-tree { grid-template-columns: minmax(var(--w-tree-min), var(--w-tree)) minmax(0, 1fr); }
+.workspace.with-tree.with-detail { grid-template-columns: minmax(var(--w-tree-min), var(--w-tree)) minmax(0, 1fr) minmax(var(--w-detail-min), var(--w-detail)); }
+
+/* kind：列左邊條、kchip、錯誤列文字 */
+.row { border-left-width: var(--kind-bar); }
+.row.k-request, .row.k-write { border-left-color: var(--k-req); }
+.row.k-response { border-left-color: var(--k-resp); }
+.row.k-error, .row.k-reject { border-left-color: var(--k-err); }
+.row.k-error .c-kind, .row.k-reject .c-kind, .row.k-error .c-value { color: var(--k-err); }
+.row.k-report, .row.k-report_header { border-left-color: var(--k-rpt); }
+.row.k-report_header .c-value { color: var(--k-rpt); }
+.kchip.k-request, .kchip.k-write { color: var(--k-req); }
+.kchip.k-response { color: var(--k-resp); }
+.kchip.k-error, .kchip.k-reject { color: var(--k-err); }
+.kchip.k-report, .kchip.k-report_header { color: var(--k-rpt); }
+
+/* 控制列、著色規則、選取、比對 */
+.row.ctl { background: var(--ctl-bg); }
+.row.rule-info { background: var(--rule-info); }
+.row.rule-ok { background: var(--rule-ok); }
+.row.rule-warn { background: var(--rule-warn); }
+.row.rule-err { background: var(--rule-err); }
+.row.rule-vio { background: var(--rule-vio); }
+.row.rule-accent { background: var(--rule-accent); }
+.row.sel { background: var(--sel-bg); box-shadow: inset 0 0 0 1px var(--sel-edge); }
+.vlist:focus-visible .row.sel { box-shadow: inset 0 0 0 2px var(--focus); }
+.cmp-detail tr.changed td { background: var(--changed); }

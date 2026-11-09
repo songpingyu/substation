@@ -1,0 +1,156 @@
+/* C 技術報告（文件感，淺色優先） — 由 tools/build_css.py 產生；元件樣式在 src/C.components.css */
+:root {
+  /* 字型 */
+  --sans: "Source Sans 3", "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", system-ui, sans-serif;
+  --mono: "Source Code Pro", "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", ui-monospace, monospace;
+  --serif: "Source Serif 4", "Noto Serif TC", "PingFang TC", "Microsoft JhengHei", serif;
+  /* 尺寸與版面（深淺共用） */
+  --font-ui: 14px; --font-dense: 13.5px; --row-h: 30px; --h-top: 48px;
+  --h-filter: 40px; --h-ov: 108px; --h-ovmini: 28px; --h-status: 32px;
+  --h-bottom: 320px; --h-ctl: 28px; --h-ctl-sm: 24px; --h-chip: 22px;
+  --h-node: 26px; --h-hist: 52px; --w-tree: 16%; --w-tree-min: 200px;
+  --w-detail: 36%; --w-detail-min: 360px; --r: 3px; --r-sm: 2px;
+  --r-lg: 4px; --u: 4px; --kind-bar: 0px; --font-chrome: 13.5px;
+  --font-small: 12.5px;
+  /* 表面 */
+  --bg: #f9f6f2; --topbar: #fefcf7; --panel: #f7f5f1; --surface: #fefcf7;
+  --surface2: #f2f0ec; --input: #ffffff; --border: #bfbdb9; --bsoft: #e3e1dd;
+  --hover: #f4f1ed; --nav-hover: #f2f0ec; --nav-active: #dee9f5;
+  /* 文字 */
+  --text: #151411; --muted: #44423e; --dim: #55524c; --faint: #7d7a74;
+  /* 強調 / 焦點 */
+  --accent: #1e4b8d; --accent-solid: #184687; --accent-ink: #ffffff; --focus: #0958bb;
+  /* 狀態 */
+  --ok: #236436; --warn: #915c08; --err: #9e1618; --info: #0b6677;
+  --vio: #703a86;
+  /* 圖表 */
+  --ch-req: #1d4d87; --ch-resp: #4f9f77; --ch-rpt: #9a4c95; --ch-ghost: #dbd9d5;
+  --ser-1: #21539c; --ser-2: #c55123; --ser-3: #31835d; --ser-4: #723789;
+  --ser-5: #a77f19; --ser-6: #23211f;
+  /* 新增：紀錄種類 */
+  --k-req: #154d8c; --k-resp: #1f744f; --k-err: #9e1618; --k-rpt: #81347c;
+  /* 新增：列底色 */
+  --ctl-bg: #fff1e0; --rule-info: #ccf1fa; --rule-ok: #d9f6d9; --rule-warn: #fff3b9;
+  --rule-err: #ffdbd7; --rule-vio: #efddf7; --rule-accent: #dbe9ff; --sel-bg: #daecfe;
+  --sel-edge: #154d8c; --changed: #fed7d3;
+  --shadow-pop: 0 1px 0 #00000014, 0 6px 18px #0000001f;
+}
+:root[data-theme="dark"] {
+  /* 表面 */
+  --bg: #181612; --topbar: #1e1b18; --panel: #201e1a; --surface: #1e1b18;
+  --surface2: #262420; --input: #161310; --border: #4a4743; --bsoft: #2e2b27;
+  --hover: #262420; --nav-hover: #25221f; --nav-active: #262f38;
+  /* 文字 */
+  --text: #e3ddd1; --muted: #bfbab0; --dim: #aeaaa2; --faint: #7d7a74;
+  /* 強調 / 焦點 */
+  --accent: #90baf1; --accent-solid: #4772b1; --accent-ink: #ffffff; --focus: #93c1fc;
+  /* 狀態 */
+  --ok: #91cb9c; --warn: #edbf71; --err: #f2897e; --info: #88cada;
+  --vio: #d0a4e4;
+  /* 圖表 */
+  --ch-req: #507cb5; --ch-resp: #89d0aa; --ch-rpt: #e39cd3; --ch-ghost: #3a3733;
+  --ser-1: #74a7e8; --ser-2: #f59569; --ser-3: #77c4a3; --ser-4: #bf8fd4;
+  --ser-5: #e6c873; --ser-6: #dad7d0;
+  /* 新增：紀錄種類 */
+  --k-req: #85b4f0; --k-resp: #8cd3ad; --k-err: #f2897e; --k-rpt: #df9ed9;
+  /* 新增：列底色 */
+  --ctl-bg: #2f2416; --rule-info: #153036; --rule-ok: #203220; --rule-warn: #373014;
+  --rule-err: #3e211f; --rule-vio: #302336; --rule-accent: #1e2a3e; --sel-bg: #233242;
+  --sel-edge: #8bbcef; --changed: #4d2623;
+  --shadow-pop: 0 1px 0 #0000004d, 0 6px 18px #00000066;
+}
+.app[data-density=dense] { --row-h: 24px; --font-dense: 13px; }
+/* ---- C 技術報告：像排好版的技術文件；細線分隔、襯線標題、少底色 ------------ */
+body { font-size: var(--font-ui); line-height: 1.5; }
+.topbar { background: var(--topbar); border-bottom: 1px solid var(--text); padding: 0 16px; }
+.topbar .brand { font-family: var(--serif); font-size: 18px; font-weight: 700; letter-spacing: .01em; margin-right: 10px; }
+.tbtn { background: transparent; border-color: var(--border); }
+.tbtn:hover { background: var(--hover); }
+.tbtn.out { border-color: var(--accent); color: var(--accent); font-weight: 600; }
+.tbtn.ghost { border-color: transparent; }
+.tbtn.ib { border-color: transparent; }
+.pill { background: transparent; border-color: transparent; padding: 0 6px; }
+.pill.ok { color: var(--ok); }
+
+.filterbar { background: var(--surface); border-bottom: 1px solid var(--bsoft); padding: 0 16px; }
+.flabel { font-family: var(--serif); font-size: 15px; font-weight: 700; }
+.fbox { background: transparent; border: 0; border-bottom: 1px solid var(--muted); border-radius: 0; }
+.fbox:focus-within { outline-offset: 2px; }
+.fchip { background: var(--surface2); border: 1px solid var(--bsoft); border-radius: 2px; }
+.fchip-text { color: var(--text); }
+.fchip-x { border-left-color: var(--bsoft); }
+.counts b { font-weight: 700; }
+
+/* 總覽：像報告裡的「圖 1」＋摘要表 */
+.overview { background: var(--surface); border-bottom: 1px solid var(--text); padding: 8px 16px 6px; gap: 28px; }
+.hist-plot { background: transparent; border: 0; border-bottom: 1px solid var(--text); border-radius: 0; }
+.hist-svg .ghost { fill: var(--ch-ghost); }
+.hist-svg .seg { stroke: var(--surface); stroke-width: 1px; vector-effect: non-scaling-stroke; }
+.hh .trange { font-weight: 600; }
+.hist-legend .sw { border-radius: 0; }
+.ovcounts { gap: 3px; }
+.crow { gap: 0; }
+.clabel { color: var(--muted); font-size: 12.5px; margin-right: 6px; letter-spacing: .02em; }
+.cnt { background: transparent; border: 0; border-left: 1px solid var(--bsoft); border-radius: 0; padding: 0 8px; }
+.clabel + .cnt { border-left: 0; padding-left: 2px; }
+.cnt:hover { background: var(--hover); }
+.cnt[aria-pressed=true] { background: var(--sel-bg); }
+.cnt .cnt-n { font-weight: 700; }
+.cnt.static { border-style: solid; border-color: var(--bsoft); border-width: 0 0 0 1px; font-style: normal; }
+
+/* 工作區：三欄之間只有細線，標題用襯線 */
+.workspace { background: var(--surface); }
+.treepane { background: var(--surface); border-right: 1px solid var(--bsoft); }
+.tree-head { background: transparent; border-bottom: 1px solid var(--text); padding: 8px 12px 5px; }
+.tree-head > span:first-child { font-family: var(--serif); font-size: 15px; font-weight: 700; }
+.tnode { border-left: 0; }
+.tnode.cur { background: var(--sel-bg); box-shadow: inset 3px 0 0 var(--sel-edge); }
+.tnode.ld .tname { font-weight: 700; }
+.listwrap { border-right: 1px solid var(--bsoft); }
+.hdr { background: var(--surface); border-bottom: 1.5px solid var(--text); }
+.hcell { border-right: 0; }
+.hbtn { color: var(--text); font-weight: 700; }
+.row { border-left-width: 0; border-bottom: 1px solid var(--bsoft); }
+.row .c-kind { font-weight: 600; }
+.row.k-request .c-kind, .row.k-write .c-kind { color: var(--k-req); }
+.row.k-response .c-kind { color: var(--k-resp); }
+.row.k-report .c-kind, .row.k-report_header .c-kind { color: var(--k-rpt); }
+.row.k-error .c-kind, .row.k-reject .c-kind { color: var(--k-err); }
+.row.sel { box-shadow: inset 3px 0 0 var(--sel-edge); }
+.row.ctl { background: var(--ctl-bg); }
+.cell.active { box-shadow: inset 0 -2px 0 var(--accent); }
+.detail { background: var(--surface); }
+.detail-head { background: transparent; border-bottom: 1px solid var(--text); padding: 8px 14px 6px; }
+.dh-id > .mono:first-child { font-family: var(--serif); font-size: 17px; font-weight: 700; }
+.detail-head .path { font-size: 14px; }
+.kchip { border-color: currentColor; border-radius: 2px; font-weight: 600; }
+.kchip.frame { color: var(--muted); border-color: var(--bsoft); font-weight: 400; }
+.iconbtn { background: transparent; border-radius: 3px; }
+.pairing { background: transparent; border-bottom: 1px solid var(--bsoft); padding: 8px 14px; border-left: 3px solid var(--k-rpt); }
+.ftable { font-size: 13.5px; }
+.ftable th { color: var(--muted); font-weight: 400; padding: 5px 10px 5px 14px; border-bottom: 1px dotted var(--border); }
+.ftable td { padding: 5px 14px 5px 4px; border-bottom: 1px dotted var(--border); }
+.ftable.nested th, .ftable.nested td { border-bottom: 0; padding-top: 1px; padding-bottom: 1px; }
+.detail h4 { font-family: var(--serif); font-size: 15px; color: var(--text); margin: 14px 14px 4px; }
+.detail-foot { font-size: 12px; padding: 6px 14px; color: var(--muted); }
+
+.statusbar { background: var(--surface); border-top: 1px solid var(--text); padding: 0 16px; }
+.segc { border-color: var(--border); border-radius: 2px; }
+.segc button[aria-pressed=true] { background: var(--text); color: var(--surface); }
+.statusbar .jump { border-color: var(--border); border-radius: 2px; background: transparent; }
+kbd { background: transparent; color: var(--muted); border-color: var(--border); border-radius: 2px; }
+.tbtn[aria-expanded=true], .tbtn[aria-pressed=true] { background: var(--sel-bg); border-color: var(--sel-edge); }
+
+.row[class*="rule-"] .c-row::before { margin-right: auto; font: 700 10px/1 var(--serif); vertical-align: super; color: var(--muted); }
+.row.rule-info .c-row::before { content: "藍"; }
+.row.rule-ok .c-row::before { content: "綠"; }
+.row.rule-warn .c-row::before { content: "黃"; }
+.row.rule-err .c-row::before { content: "紅"; }
+.row.rule-vio .c-row::before { content: "紫"; }
+.row.rule-accent .c-row::before { content: "強"; }
+
+@media print {
+  .overview, .row, .hdr { background: none !important; }
+  .row.sel { box-shadow: inset 3px 0 0 #000; }
+}
+

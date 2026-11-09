@@ -1,0 +1,24 @@
+{
+ "generator": "scripts/pcap_web_design_capture.py",
+ "commit": "c686fd4",
+ "date": "2026-11-09",
+ "viewport": "1440 x 900, deviceScaleFactor 1, headless Chromium",
+ "data": "packge_to_json/lab_brcb_report.pcap（真機 ABB relay 的 BRCB 報告 + SCADA 輪詢），整段對話 + lab_brcb_datasets.json；比對用 pair_ctlval_client / pair_ctlval_ied.pcap（port 10202）",
+ "selected_row": 64,
+ "files": {
+  "07_blank_decode_panel_light.png": "空白頁（還沒開檔）+ 頂欄「解碼」面板打開",
+  "01_main_light.png": "主畫面：頂欄 / 篩選列（1 個條件）/ 總覽帶 / 模型樹 | 列表 | 詳情（選了一列報告成員，值是展開的結構）/ 工具列",
+  "02_main_dark.png": "主畫面，深色",
+  "06_detail_bytes_dark.png": "詳情切到 bytes：hex dump + TLV 樹（深色）",
+  "03_timeseries_light.png": "底部分頁「時間序列」（兩個 path 的折線 + 取樣表）",
+  "04_timeseries_dark.png": "底部分頁「時間序列」，深色",
+  "05_quality_light.png": "底部分頁「品質」（依類別分組的發現）",
+  "09_export_dialog_light.png": "匯出對話框",
+  "08_compare_light.png": "底部分頁「比對」：proxy 錄的 client 端（A）/ IED 端（B），選了值不同的那一列"
+ },
+ "snapshot_vs_live_pixels_differ": {
+  "light": "0.35%",
+  "dark": "0.10%"
+ },
+ "console_errors": []
+}

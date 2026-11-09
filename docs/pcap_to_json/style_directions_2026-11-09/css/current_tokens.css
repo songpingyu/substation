@@ -1,0 +1,44 @@
+:root{--sans:"IBM Plex Sans", "IBM Plex Sans TC", "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", system-ui, sans-serif;--mono:"IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;--bg:#eceff4;--topbar:#fff;--panel:#e5e9f0;--surface:#fff;--surface2:#e5e9f0;--input:#fff;--border:#d8dee9;--bsoft:#e1e7ef;--hover:#e5e9f0;--text:#2e3440;--muted:#434c5e;--dim:#5e6779;--faint:#7e889b;--accent:#527399;--accent-solid:#4a6a98;--accent-ink:#fff;--ok:#5b7e3e;--warn:#8a6a1c;--err:#a5404a;--info:#3e7a8c;--vio:#8a5e82;--nav-hover:#dfe4ec;--nav-active:#d3dae6;--focus:#1f6feb;--ch-req:#2f7fc0;--ch-resp:#3a8f4a;--ch-rpt:#8f55b8;--ch-ghost:#d8dee9;--ser-1:#2a78d6;--ser-2:#eb6834;--ser-3:#1baf7a;--ser-4:#6250d6;--ser-5:#eda100;--ser-6:#e87ba4;--row-h:32px;--font-ui:14px;--font-dense:13px}
+:root[data-theme="dark"]{--bg:#010409;--topbar:#0d1117;--panel:#0d1117;--surface:#161b22;--surface2:#21262d;--input:#010409;--border:#30363d;--bsoft:#21262d;--hover:#1c2128;--text:#e6edf3;--muted:#8b949e;--dim:#6e7681;--faint:#484f58;--accent:#58a6ff;--accent-solid:#1f6feb;--accent-ink:#fff;--ok:#3fb950;--warn:#d29922;--err:#f85149;--info:#56d4dd;--vio:#a371f7;--nav-hover:#161b22;--nav-active:#21262d;--focus:#58a6ff;--ch-req:#2f8fcb;--ch-resp:#3e9b52;--ch-rpt:#9c6fd6;--ch-ghost:#30363d;--ser-1:#3b82d0;--ser-2:#cf6a3c;--ser-3:#1f9a6c;--ser-4:#7a6ad0;--ser-5:#b8891f;--ser-6:#c06b96}
+:root {
+  /* 版面（與深淺色無關） */
+  --h-top: 44px;        /* 頂欄高度 */
+  --h-filter: 40px;     /* 篩選列高度 */
+  --h-ov: 112px;        /* 總覽帶高度（展開） */
+  --h-ovmini: 28px;     /* 總覽帶高度（收合） */
+  --h-status: 32px;     /* 工具列高度 */
+  --h-bottom: 300px;    /* 底部分頁高度 */
+  --h-ctl: 30px;        /* 一般按鈕 / 篩選框高度 */
+  --h-ctl-sm: 24px;     /* 小按鈕高度（工具列、詳情頭） */
+  --h-chip: 22px;       /* 篩選 chip、計數藥丸高度 */
+  --h-node: 26px;       /* 模型樹一列高度 */
+  --h-hist: 57px;       /* 直方圖繪圖區高度 */
+  --w-tree: 18%;        /* 模型樹欄寬（下限 --w-tree-min） */
+  --w-tree-min: 200px;
+  --w-detail: 32%;      /* 詳情欄寬（下限 --w-detail-min） */
+  --w-detail-min: 320px;
+  --r: 6px;             /* 按鈕、輸入框圓角 */
+  --r-sm: 4px;          /* chip、kchip 圓角 */
+  --r-lg: 10px;         /* 浮出層、對話框圓角 */
+  --u: 4px;             /* 間距單位 */
+  --kind-bar: 3px;      /* 列左邊的 kind 色條寬 */
+  --font-chrome: 13px;  /* 頂欄 / 篩選列按鈕字級 */
+  --font-small: 12px;   /* 計數、chip、提示字級 */
+
+  /* 新的語意色（預設 = 現在的推導方式） */
+  --k-req: var(--info);
+  --k-resp: var(--ok);
+  --k-err: var(--err);
+  --k-rpt: var(--vio);
+  --ctl-bg: color-mix(in srgb, var(--warn) 12%, transparent);
+  --rule-info: color-mix(in srgb, var(--info) 16%, transparent);
+  --rule-ok: color-mix(in srgb, var(--ok) 16%, transparent);
+  --rule-warn: color-mix(in srgb, var(--warn) 18%, transparent);
+  --rule-err: color-mix(in srgb, var(--err) 16%, transparent);
+  --rule-vio: color-mix(in srgb, var(--vio) 16%, transparent);
+  --rule-accent: color-mix(in srgb, var(--accent) 16%, transparent);
+  --sel-bg: var(--nav-active);
+  --sel-edge: transparent;
+  --changed: color-mix(in srgb, var(--err) 14%, transparent);
+  --shadow-pop: 0 1px 2px #00000014, 0 10px 28px #0000002e;
+}

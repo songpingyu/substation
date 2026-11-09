@@ -1,0 +1,74 @@
+{
+ "base-light": {
+  "texts": 418,
+  "min": 4.04,
+  "min_at": "section.pairing > div > button.ref.mono | #63",
+  "console_errors": []
+ },
+ "base-dark": {
+  "texts": 418,
+  "min": 3.77,
+  "min_at": "tr > th > span.fid.mono | ts",
+  "console_errors": []
+ },
+ "A-light": {
+  "texts": 434,
+  "min": 5.68,
+  "min_at": "section.pairing > div > button.ref.mono | #63",
+  "console_errors": []
+ },
+ "A-dark": {
+  "texts": 434,
+  "min": 6.33,
+  "min_at": "section.pairing > div > button.ref.mono | #63",
+  "console_errors": []
+ },
+ "B-light": {
+  "texts": 588,
+  "min": 4.52,
+  "min_at": "div.body > div.row.k-report.unk.sel > div.cell.c-kind | ▤ report",
+  "console_errors": []
+ },
+ "B-dark": {
+  "texts": 588,
+  "min": 5.91,
+  "min_at": ".body > div.row.k-report.unk.sel > div.cell.c-row.mono.right | 64",
+  "console_errors": []
+ },
+ "C-light": {
+  "texts": 434,
+  "min": 5.48,
+  "min_at": "div.crow > button.cnt.warn > span.cnt-k | unknown",
+  "console_errors": []
+ },
+ "C-dark": {
+  "texts": 434,
+  "min": 6.24,
+  "min_at": "div.body > div.row.k-report.unk.sel > div.cell.c-kind | ▤ report",
+  "console_errors": []
+ },
+ "D-light": {
+  "texts": 413,
+  "min": 4.94,
+  "min_at": "div.fchips > span.fchip > button.fchip-text.mono | kind != report_header",
+  "console_errors": []
+ },
+ "D-dark": {
+  "texts": 413,
+  "min": 4.56,
+  "min_at": "div.app > header.topbar > button.tbtn.out | 開啟檔案…",
+  "console_errors": []
+ },
+ "E-light": {
+  "texts": 357,
+  "min": 8.91,
+  "min_at": "div.detail-head > span.dh-id > span.kchip.k-report | report",
+  "console_errors": []
+ },
+ "E-dark": {
+  "texts": 357,
+  "min": 10.37,
+  "min_at": "section.pairing > div > button.ref.mono | #63",
+  "console_errors": []
+ }
+}

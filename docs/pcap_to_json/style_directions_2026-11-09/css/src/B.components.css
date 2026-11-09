@@ -1,0 +1,88 @@
+/* ---- B 高密度分析工作站：等寬為主、細線、零裝飾、鍵盤優先 ----------------- */
+body { font-size: var(--font-ui); line-height: 1.35; }
+.vlist, .tree, .detail, .ovcounts, .hist-legend, .statusbar, .counts { font-family: var(--mono); }
+:focus-visible { outline: 2px solid var(--focus); outline-offset: 1px; }
+
+.topbar { padding: 0 8px; border-bottom: 1px solid var(--border); }
+.topbar .brand { font-size: 13px; font-weight: 700; margin-right: 2px; }
+.tbtn { background: transparent; border-color: var(--bsoft); padding: 0 8px; gap: 5px; }
+.tbtn:hover { background: var(--hover); border-color: var(--border); }
+.tbtn.out { color: var(--accent); border-color: var(--accent); }
+.tbtn.ib { border-color: transparent; }
+.fname { font-size: 12px; }
+.fname .nm { font-size: 12px; }
+.decb .v { font-size: 12px; }
+.pill { background: transparent; border-color: var(--bsoft); font-family: var(--mono); font-size: 11.5px; padding: 0 8px; }
+.pill .dot { width: 6px; height: 6px; border-radius: 1px; }
+
+.filterbar { padding: 0 8px; background: var(--topbar); }
+.flabel { font-size: 12px; color: var(--muted); }
+.fbox { background: var(--input); border-color: var(--border); padding: 0 2px; }
+.fchip { border-color: color-mix(in srgb, var(--accent) 55%, transparent); background: color-mix(in srgb, var(--accent) 14%, transparent); }
+.fchip-text { color: var(--text); font-size: 11.5px; padding: 0 5px; }
+.fchip-x { border-left-color: color-mix(in srgb, var(--accent) 40%, transparent); }
+.counts { font-size: 12px; }
+
+/* 總覽：緊湊的兩欄 */
+.overview { padding: 4px 8px; gap: 14px; grid-template-columns: minmax(400px, .8fr) minmax(0, 1.2fr); }
+.hist { gap: 2px; }
+.hh, .hist-legend { font-size: 11.5px; line-height: 14px; }
+.hist-legend { gap: 10px; }
+.hist-plot { background: var(--input); border-color: var(--bsoft); border-radius: 0; }
+.hist-svg .seg { stroke: var(--input); stroke-width: 1px; vector-effect: non-scaling-stroke; }
+.ovcounts { gap: 2px; padding-right: 28px; }
+.crow { gap: 3px; }
+.cnt { background: transparent; border-color: var(--bsoft); border-radius: 2px; padding: 0 5px; gap: 4px; font-size: 11.5px; }
+.cnt:hover { background: var(--hover); }
+.clabel { font-size: 11.5px; color: var(--muted); }
+.ovt { top: 4px; right: 6px; }
+
+/* 工作區 */
+.treepane { border-right: 1px solid var(--border); }
+.tree-head, .detail-head { background: var(--topbar); padding: 3px 8px; font-size: 12px; }
+.tree-head { font-weight: 600; }
+.tree { padding: 2px 0; }
+.tnode { border-left-width: 2px; }
+.tnode.ln, .tnode.seg { background-image: linear-gradient(var(--bsoft), var(--bsoft)); background-size: 1px 100%; background-position: 13px 0; background-repeat: no-repeat; }
+.tnode.seg { background-position: 13px 0, 27px 0; }
+.tnode.cur { background: var(--sel-bg); border-left-color: var(--sel-edge); }
+.tcount { font-size: 11px; }
+.listwrap { border-right: 1px solid var(--border); }
+.hdr { background: var(--topbar); border-bottom-color: var(--border); }
+.hbtn { font-weight: 600; font-size: 11.5px; padding: 0 6px; color: var(--muted); }
+.hcell { border-right-color: var(--bsoft); }
+.cell { padding: 0 6px; }
+.row { border-bottom-color: var(--bsoft); }
+.row.k-request .c-kind, .row.k-write .c-kind { color: var(--k-req); }
+.row.k-response .c-kind { color: var(--k-resp); }
+.row.k-report .c-kind, .row.k-report_header .c-kind { color: var(--k-rpt); }
+.row.sel { box-shadow: inset 0 0 0 1px var(--sel-edge); }
+.row .c-row { color: var(--muted); }
+.detail-head { gap: 2px 6px; }
+.kchip { border-radius: 2px; padding: 0 4px; font-size: 11px; }
+.iconbtn.sm { padding: 1px 6px; font-size: 11.5px; border-radius: 2px; }
+.iconbtn { background: transparent; border-color: var(--bsoft); }
+.pairing { padding: 4px 8px; font-size: 12px; background: var(--topbar); }
+.ftable { font-size: 12px; }
+.ftable th { padding: 1px 8px; font-weight: 400; }
+.ftable td { padding: 1px 8px 1px 4px; }
+.fid { font-size: 10.5px; }
+.detail h4 { margin: 8px 8px 2px; font-size: 12px; }
+.detail-foot { font-size: 11px; padding: 3px 8px; }
+
+.statusbar { padding: 0 8px; font-size: 11.5px; gap: 6px; background: var(--topbar); }
+.statusbar .jump { height: 20px; width: 92px; border-radius: 2px; }
+.segc { border-radius: 2px; }
+.segc button { height: 18px; padding: 0 6px; font-size: 11.5px; }
+.segc button[aria-pressed=true] { background: var(--sel-bg); }
+.sep { height: 16px; }
+kbd { font-size: 10.5px; border-bottom-width: 1px; border-radius: 2px; padding: 0 3px; background: transparent; color: var(--muted); }
+.tbtn[aria-expanded=true], .tbtn[aria-pressed=true] { background: var(--sel-bg); border-color: var(--sel-edge); }
+
+.row[class*="rule-"] .c-row::before { margin-right: auto; font: 600 10px/13px var(--mono); padding: 0 2px; border-radius: 2px; background: var(--text); color: var(--surface); }
+.row.rule-info .c-row::before { content: "藍"; }
+.row.rule-ok .c-row::before { content: "綠"; }
+.row.rule-warn .c-row::before { content: "黃"; }
+.row.rule-err .c-row::before { content: "紅"; }
+.row.rule-vio .c-row::before { content: "紫"; }
+.row.rule-accent .c-row::before { content: "強"; }
