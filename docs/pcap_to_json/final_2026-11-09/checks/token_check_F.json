@@ -1,0 +1,94 @@
+{
+ "summary": {
+  "light": {
+   "text": 4.95,
+   "status_text": 4.51,
+   "focus": 3.47,
+   "chart": 3.04,
+   "series": 3.01,
+   "cvd_chart": [
+    5.7,
+    "ch-req/ch-rpt pro"
+   ],
+   "cvd_kinds": [
+    5.0,
+    "k-req/k-rpt deu"
+   ],
+   "cvd_status": [
+    4.1,
+    "warn/err deu"
+   ],
+   "cvd_ser_solid": [
+    12.9,
+    "ser-1/ser-3 tri"
+   ],
+   "cvd_ser_dash": [
+    20.4,
+    "ser-4/ser-6 deu"
+   ],
+   "cvd_ser_all": [
+    1.8,
+    "ser-2/ser-5 deu"
+   ],
+   "tints_normal": [
+    10.5,
+    "rule-vio/rule-accent nor"
+   ],
+   "cvd_tints": [
+    2.7,
+    "rule-vio/rule-accent pro"
+   ],
+   "tint_vs_sel": [
+    3.3,
+    "rule-accent/sel-bg nor"
+   ]
+  },
+  "dark": {
+   "text": 5.6,
+   "status_text": 5.21,
+   "focus": 5.85,
+   "chart": 4.18,
+   "series": 6.71,
+   "cvd_chart": [
+    15.2,
+    "ch-req/ch-rpt pro"
+   ],
+   "cvd_kinds": [
+    5.5,
+    "k-req/k-rpt pro"
+   ],
+   "cvd_status": [
+    5.7,
+    "ok/info tri"
+   ],
+   "cvd_ser_solid": [
+    10.9,
+    "ser-1/ser-3 tri"
+   ],
+   "cvd_ser_dash": [
+    20.1,
+    "ser-4/ser-5 tri"
+   ],
+   "cvd_ser_all": [
+    1.4,
+    "ser-1/ser-4 deu"
+   ],
+   "tints_normal": [
+    8.9,
+    "rule-vio/rule-accent nor"
+   ],
+   "cvd_tints": [
+    1.3,
+    "rule-info/rule-vio deu"
+   ],
+   "tint_vs_sel": [
+    3.6,
+    "rule-accent/sel-bg nor"
+   ]
+  }
+ },
+ "fails": {
+  "light": [],
+  "dark": []
+ }
+}

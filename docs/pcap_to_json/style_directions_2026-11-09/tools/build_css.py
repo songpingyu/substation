@@ -90,6 +90,22 @@ CFG = {
            'dark': {'--focus-halo': '#000000', '--shadow-pop': '0 0 0 2px #ffffff'}},
     dense={'--row-h': '30px', '--font-dense': '13.5px'},
  ),
+ 'F': dict(
+    name='F 定稿：方案 1 × D，淺色用 A 的灰',
+    fonts={'--sans': '"Inter", ' + CJK_SANS, '--mono': '"Geist Mono", ' + CJK_MONO},
+    fontcss=['inter/400.css', 'inter/500.css', 'inter/600.css', 'inter/700.css', 'geist-mono/400.css', 'geist-mono/500.css', 'geist-mono/600.css'],
+    layout={'--font-ui': '13.5px', '--font-dense': '13px', '--row-h': '30px',
+            '--h-top': '40px', '--h-filter': '42px', '--h-ov': '100px', '--h-ovmini': '30px', '--h-status': '38px', '--h-bottom': '300px',
+            '--h-ctl': '30px', '--h-ctl-sm': '26px', '--h-chip': '22px', '--h-node': '28px', '--h-hist': '50px',
+            '--w-tree': '17%', '--w-tree-min': '200px', '--w-detail': '33%', '--w-detail-min': '340px',
+            '--r': '8px', '--r-sm': '6px', '--r-lg': '12px', '--u': '4px', '--kind-bar': '3px', '--font-chrome': '13px', '--font-small': '12px'},
+    extra={'light': {'--shadow-xs': '0 1px 2px #10182814', '--shadow-card': '0 1px 2px #1018281a, 0 1px 3px #10182824',
+                     '--shadow-pop': '0 4px 6px -2px #1018280f, 0 12px 20px -4px #1018282e'},
+           'dark': {'--shadow-xs': '0 1px 2px #00000066', '--shadow-card': '0 0 0 1px #ffffff0d, 0 1px 3px #00000080',
+                    '--shadow-pop': '0 0 0 1px #ffffff14, 0 12px 24px #000000b3'}},
+    dense={'--row-h': '24px', '--font-dense': '12.5px'},
+    pre="(() => { const c = '64px 124px 118px 320px 56px 104px 220px 150px'; document.querySelectorAll('.vlist .hdr, .vlist .row').forEach(e => e.style.gridTemplateColumns = c); document.querySelectorAll('.vlist .hdr, .vlist .body').forEach(e => e.style.width = '1156px'); })()",
+ ),
 }
 
 ORDER = [

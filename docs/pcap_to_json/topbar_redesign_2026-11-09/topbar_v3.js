@@ -31,31 +31,37 @@ window.__tb3 = (() => {
   function collect() {
     const top = $('header.topbar'), fbar = $('section.filterbar'), sb = $('footer.statusbar');
     const anchors = $$('.anchor', top);
+    const decA = anchors.find((x) => x.querySelector('.decb'));
+    const connA = anchors.find((x) => !x.querySelector('.decb'));
     const fname = $('.fname', top);
-    const fbtn = (t) => $$(':scope > button.tbtn', fbar).find((b) => b.textContent.trim().startsWith(t));
-    const sbtn = (t) => $$(':scope > button.tbtn', sb).find((b) => b.textContent.trim().startsWith(t));
+    const fbtn = (t) => $$(':scope > button.tbtn', fbar).find((x) => x.textContent.trim().startsWith(t));
+    const sbtn = (t) => sb && $$(':scope > button.tbtn', sb).find((x) => x.textContent.trim().startsWith(t));
+    const decKs = decA ? $$('.k', decA) : [];
     Object.assign(S, {
       top, fbar, sb, fwrap: $('.filterwrap'),
       fileInput: $('#file'),
-      fileName: $('.nm', fname).textContent.trim(),
-      size: fname.getAttribute('title').split('·')[1].trim(),
-      conn: anchors[0].textContent.trim(),
-      connTitle: $('button', anchors[0]).getAttribute('title'),
-      decV: $('.decb .v', top).textContent.trim(),
-      decRest: $$('.decb .k', top)[1].textContent.trim().replace(/^·\s*/, ''),
-      decTitle: $('.decb', top).getAttribute('title'),
+      noFile: fname.classList.contains('none'),
+      fileName: ($('.nm', fname) || fname).textContent.trim(),
+      size: ((fname.getAttribute('title') || '').split('·')[1] || '').trim(),
+      conn: connA ? connA.textContent.trim() : '',
+      decV: decA ? $('.v', decA).textContent.trim() : '',
+      decRest: decKs[1] ? decKs[1].textContent.trim().replace(/^·\s*/, '') : '',
+      decOpen: decA ? $('button', decA).getAttribute('aria-expanded') === 'true' : false,
       stat: $('.pill .t', top).textContent.trim(),
+      statErr: $('.pill', top).classList.contains('err'),
       help: $$('.tbtn.ib', top)[0], theme: $$('.tbtn.ib', top)[1], ver: $$('.tbtn.ib', top)[2],
       openBtn: $('.tbtn.out', top),
       fbox: $('.fbox', fbar), apply: fbtn('套用'), recent: fbtn('最近'), bm: fbtn('書籤'),
       counts: $('.counts', fbar), color: fbtn('著色'), exportB: fbtn('匯出'),
-      sbSel: $('.sb-sel', sb), jumpLabel: $('label', sb), jump: $('input.jump', sb), jumpKbd: $(':scope > kbd', sb),
-      segc: $('.segc', sb), dense: sbtn('密集'), cols: sbtn('欄位'),
+      sbSel: sb && $('.sb-sel', sb), jumpLabel: sb && $('label', sb), jump: sb && $('input.jump', sb), jumpKbd: sb && $(':scope > kbd', sb),
+      segc: sb && $('.segc', sb), dense: sbtn('密集'), cols: sbtn('欄位'),
       tabs: ['品質', '時間序列', '比對'].map(sbtn), shot: sbtn('截圖'),
     });
     S.version = S.ver.getAttribute('title');
     S.themeNow = document.documentElement.getAttribute('data-theme') === 'dark' ? '深色' : '淺色';
-    S.total = $$('b', S.counts)[1].textContent; S.shown = $$('b', S.counts)[0].textContent;
+    const bs = $$('b', S.counts);
+    S.shown = bs[0] ? bs[0].textContent : ''; S.total = bs[1] ? bs[1].textContent : '';
+    S.countsText = S.counts.textContent.trim();
   }
 
   function appButton(P) {
@@ -66,9 +72,12 @@ window.__tb3 = (() => {
   }
   function sourceChip(P) {
     const full = P !== 2;
-    const meta = full ? `<b>${S.decV}</b> · ${S.decRest} · ${S.conn}` : `<b>${S.decV}</b>`;
+    const parts = full ? [`<b>${S.decV}</b>`, S.decRest, S.conn].filter(Boolean) : [`<b>${S.decV}</b>`];
+    const meta = parts.join(' · ');
     const b = el('button', 'qbtn srcchip', `${I.file}<span class="nm">${S.fileName}</span><span class="meta">${meta}</span>${full ? '' : '<span class="st"></span>'}${I.chev}`);
-    b.title = `${S.fileName} · ${S.size}\n解碼 ${S.decV} · ${S.decRest}\n${S.conn}\n${S.stat}`; b.id = 'tb-src';
+    b.title = [S.fileName + (S.size ? ' · ' + S.size : ''), '解碼 ' + [S.decV, S.decRest].filter(Boolean).join(' · '), S.conn, S.stat].filter(Boolean).join('\n'); b.id = 'tb-src';
+    if (S.noFile) b.classList.add('nofile');
+    if (S.decOpen) b.setAttribute('aria-expanded', 'true');
     return b;
   }
   function queryMenu() {
@@ -86,11 +95,13 @@ window.__tb3 = (() => {
     S.fbox.appendChild(S.apply);
   }
   function countsEl(short) {
+    if (!S.total) return el('span', 'qcount', S.countsText);
     const c = el('span', 'qcount', short ? `<b>${S.shown}</b> / ${S.total} 列` : `顯示 <b>${S.shown}</b> / 全部 <b>${S.total}</b>`);
     c.title = `顯示 ${S.shown} / 全部 ${S.total}`; return c;
   }
   function bottomBar() {
     const sb = S.sb;
+    if (!sb) { if (S.exportB) S.exportB.style.display = 'none'; return; }
     const tf = el('button', 'qbtn', `<span class="muted">時間</span>${$('button[aria-pressed=true]', S.segc).textContent}${I.chev}`); tf.id = 'tb-time';
     tf.title = '時間格式：本機 / UTC / 相對首筆 / 相對上一列';
     const disp = el('button', 'qbtn', `${I.sliders}顯示${I.chev}`); disp.id = 'tb-disp';
@@ -101,20 +112,21 @@ window.__tb3 = (() => {
     sb.append(S.sbSel, sep(), S.jumpLabel, S.jump, S.jumpKbd, sep(), tf, disp, el('span', 'spacer'), ex, sep(), ...S.tabs);
   }
 
-  function restructure(P) {
+  function restructure(P, opts) {
+    opts = opts || {};
     collect();
     const root = document.documentElement.style;
     const top = S.top;
     top.innerHTML = '';
     moveApplyIntoBox();
     if (P === 1 || P === 3) {
-      root.setProperty('--h-top', '40px'); root.setProperty('--h-filter', '42px');
-      const st = el('span', 'ststat', `<span class="st"></span>${S.stat.replace(/(\d[\d,]*) 筆/, '<b>$1</b> 筆')}`);
+      if (!opts.tokenHeights) { root.setProperty('--h-top', '40px'); root.setProperty('--h-filter', '42px'); }
+      const st = el('span', 'ststat' + (S.statErr ? ' err' : ''), `<span class="st"></span>${S.stat.replace(/(\d[\d,]*) 筆/, '<b>$1</b> 筆')}`);
       top.append(appButton(1), el('span', 'vsep'), sourceChip(1), el('span', 'spacer'), st, cmdButton(1), S.fileInput);
       S.fbar.innerHTML = '';
       S.fbar.append(queryMenu(), S.fbox, countsEl(false));
     } else {
-      root.setProperty('--h-top', '48px');
+      if (!opts.tokenHeights) root.setProperty('--h-top', '48px');
       top.classList.add('cmdbar');
       top.append(appButton(P), sourceChip(P), el('span', 'vsep'), queryMenu(), S.fbox, countsEl(true), cmdButton(P), S.fileInput);
       S.fwrap.style.display = 'none';

@@ -1,0 +1,12 @@
+/* ==========================================================================
+   v2 共用修正：跟風格無關、五個方向都要的可讀性修正。
+   ========================================================================== */
+/* 等寬字不連字：!= 、== 、-> 照原樣顯示（Iosevka、Geist Mono 等預設會連字） */
+.mono, code, kbd, .cm-editor, .vlist, .tree, .detail, .ovcounts, .counts, .hh, .statusbar { font-variant-ligatures: none; font-feature-settings: "calt" 0, "liga" 0; }
+/* hex 只在位元組之間換行（原本 break-all 會把 3d 拆成 3 / d） */
+.hexv { word-break: normal; overflow-wrap: anywhere; }
+/* 直方圖疊在一起的兩段之間留 1 px 縫（色弱也看得出是兩段） */
+.hist-svg .seg { stroke: var(--surface); stroke-width: 1px; vector-effect: non-scaling-stroke; }
+/* 圖例在窄螢幕時提示字截斷，不壓到右邊的計數 */
+.hist-legend { overflow: hidden; }
+.hist-legend .hint.ml { min-width: 0; overflow: hidden; text-overflow: ellipsis; }

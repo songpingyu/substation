@@ -1,0 +1,17 @@
+F-main-light       hdr.y=190 rows 36-67 | text min 5.08 (-head > span.dh-id > span.kchip.k-report | report) | errors 0 | overflow - | trunc -
+F-1280-light       hdr.y=190 rows 40-65 | errors 0 | overflow - | trunc -
+F-main-dark        hdr.y=190 rows 36-67 | text min 4.56 (.topbar > button.qbtn.appbtn > span.logo | MMS) | errors 0 | overflow - | trunc -
+F-1280-dark        hdr.y=190 rows 40-65 | errors 0 | overflow - | trunc -
+F-1920-light       hdr.y=190 rows 36-77 | errors 0 | overflow - | trunc -
+F-bytes-light      hdr.y=190 rows 36-67 | text min 5.08 (-head > span.dh-id > span.kchip.k-report | report) | errors 0 | overflow - | trunc -
+F-bytes-dark       hdr.y=190 rows 36-67 | text min 4.56 (.topbar > button.qbtn.appbtn > span.logo | MMS) | errors 0 | overflow - | trunc -
+F-blank-light      hdr.y=None rows --- | text min 5.48 (div.dz > div.dsum > button.link | 改設定…) | errors 0 | overflow - | trunc -
+F-blank-dark       hdr.y=None rows --- | text min 4.56 (.topbar > button.qbtn.appbtn > span.logo | MMS) | errors 0 | overflow - | trunc -
+F-compare-light    hdr.y=190 rows 0-10 | text min 4.84 (iv.cmp-rows > div.cmp-row.sel > span.err | ≠ 值不同) | errors 0 | overflow - | trunc -
+F-compare-dark     hdr.y=190 rows 0-10 | text min 4.56 (.topbar > button.qbtn.appbtn > span.logo | MMS) | errors 0 | overflow - | trunc -
+F-export-light     hdr.y=190 rows 36-67 | text min 5.08 (-head > span.dh-id > span.kchip.k-report | report) | errors 0 | overflow - | trunc -
+F-export-dark      hdr.y=190 rows 36-67 | text min 4.56 (.topbar > button.qbtn.appbtn > span.logo | MMS) | errors 0 | overflow - | trunc -
+F-quality-light    hdr.y=190 rows 49-65 | text min 5.08 (-head > span.dh-id > span.kchip.k-report | report) | errors 0 | overflow - | trunc -
+F-quality-dark     hdr.y=190 rows 49-65 | text min 4.56 (.topbar > button.qbtn.appbtn > span.logo | MMS) | errors 0 | overflow - | trunc -
+F-timeseries-light hdr.y=190 rows 49-65 | text min 5.08 (-head > span.dh-id > span.kchip.k-report | report) | errors 0 | overflow - | trunc -
+F-timeseries-dark  hdr.y=190 rows 49-65 | text min 4.56 (.topbar > button.qbtn.appbtn > span.logo | MMS) | errors 0 | overflow - | trunc -

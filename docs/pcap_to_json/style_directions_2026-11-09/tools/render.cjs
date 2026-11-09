@@ -12,6 +12,7 @@ const root = cfg.root;
 async function fixRows(page) {
   return page.evaluate(() => {
     const vlist = document.querySelector('.vlist');
+    if (!vlist) return null;
     const body = vlist.querySelector('.body');
     const rows = [...body.querySelectorAll(':scope > .row')];
     const ty = (r) => {
@@ -35,7 +36,7 @@ async function fixRows(page) {
       r.style.height = R + 'px';
       r.style.transform = `translateY(${(i - first) * R}px)`;
     });
-    body.style.height = 1656 * R + 'px';
+    body.style.height = (+vlist.getAttribute('aria-rowcount') || 1656) * R + 'px';
     const shown = rows.filter((r, i) => i >= first && (i - first) * R < visibleH).map((r) => +r.dataset.row);
     return { R, nFit, first: rows[first] && +rows[first].dataset.row, shownFrom: shown[0], shownTo: shown[shown.length - 1], total: rows.length };
   });
@@ -78,8 +79,8 @@ async function metrics(page) {
       const cs = getComputedStyle(el);
       if (cs.textOverflow === 'ellipsis' && el.scrollWidth > el.clientWidth + 1) out.truncated.push((el.className || el.tagName) + ': ' + el.textContent.trim().slice(0, 40));
     }
-    const R = getComputedStyle(document.querySelector('.vlist')).getPropertyValue('--row-h');
-    out.rowH = R.trim();
+    const vl = document.querySelector('.vlist');
+    out.rowH = vl ? getComputedStyle(vl).getPropertyValue('--row-h').trim() : '';
     out.fontUi = getComputedStyle(document.body).fontSize;
     out.fonts = [...document.fonts].filter((f) => f.status === 'loaded').map((f) => `${f.family.replace(/"/g, '')} ${f.weight}`);
     out.fonts = [...new Set(out.fonts)];

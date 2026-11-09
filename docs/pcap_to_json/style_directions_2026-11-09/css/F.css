@@ -1,0 +1,182 @@
+/* F 定稿：方案 1 × D，淺色用 A 的灰 — 由 tools/build_css.py 產生；元件樣式在 src/F.components.css */
+:root {
+  /* 字型 */
+  --sans: "Inter", "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", system-ui, sans-serif;
+  --mono: "Geist Mono", "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", ui-monospace, monospace;
+  /* 尺寸與版面（深淺共用） */
+  --font-ui: 13.5px; --font-dense: 13px; --row-h: 30px; --h-top: 40px;
+  --h-filter: 42px; --h-ov: 100px; --h-ovmini: 30px; --h-status: 38px;
+  --h-bottom: 300px; --h-ctl: 30px; --h-ctl-sm: 26px; --h-chip: 22px;
+  --h-node: 28px; --h-hist: 50px; --w-tree: 17%; --w-tree-min: 200px;
+  --w-detail: 33%; --w-detail-min: 340px; --r: 8px; --r-sm: 6px;
+  --r-lg: 12px; --u: 4px; --kind-bar: 3px; --font-chrome: 13px;
+  --font-small: 12px;
+  /* 表面 */
+  --bg: #d3d6da; --topbar: #c6c9cd; --panel: #ccd0d3; --surface: #e5e8ec;
+  --surface2: #d6d9dd; --input: #f4f5f7; --border: #898c90; --bsoft: #c1c4c8;
+  --hover: #d9dde0; --nav-hover: #d0d3d6; --nav-active: #c9cce5;
+  /* 文字 */
+  --text: #16191c; --muted: #3c4045; --dim: #484e54; --faint: #646a70;
+  /* 強調 / 焦點 */
+  --accent: #4a3ebc; --accent-solid: #4f45c4; --accent-ink: #ffffff; --focus: #5952d2;
+  /* 狀態 */
+  --ok: #00603a; --warn: #774906; --err: #a70d2b; --info: #08597c;
+  --vio: #852499;
+  /* 圖表 */
+  --ch-req: #035a9c; --ch-resp: #19966e; --ch-rpt: #c24ba1; --ch-ghost: #bbbec1;
+  --ser-1: #0267c7; --ser-2: #d06208; --ser-3: #17957c; --ser-4: #8031c0;
+  --ser-5: #a28110; --ser-6: #494d58;
+  /* 新增：紀錄種類 */
+  --k-req: #05558f; --k-resp: #0b5e44; --k-err: #a70d2b; --k-rpt: #92148d;
+  /* 新增：列底色 */
+  --ctl-bg: #f1dfc0; --rule-info: #c4e8fa; --rule-ok: #c8f2da; --rule-warn: #fcedb4;
+  --rule-err: #f5c9cb; --rule-vio: #e3cae9; --rule-accent: #cbd0f4; --sel-bg: #bfc4ee;
+  --sel-edge: #544ccb; --changed: #fec5c8;
+  --shadow-xs: 0 1px 2px #10182814;
+  --shadow-card: 0 1px 2px #1018281a, 0 1px 3px #10182824;
+  --shadow-pop: 0 4px 6px -2px #1018280f, 0 12px 20px -4px #1018282e;
+}
+:root[data-theme="dark"] {
+  /* 表面 */
+  --bg: #0e0f12; --topbar: #141518; --panel: #1b1c1f; --surface: #16171a;
+  --surface2: #222326; --input: #121315; --border: #2d2e31; --bsoft: #222326;
+  --hover: #1f2023; --nav-hover: #1e1f22; --nav-active: #292b46;
+  /* 文字 */
+  --text: #e9ebef; --muted: #b5b7be; --dim: #a8abb3; --faint: #6f7178;
+  /* 強調 / 焦點 */
+  --accent: #9ea4fc; --accent-solid: #6965e6; --accent-ink: #ffffff; --focus: #a2a8fd;
+  /* 狀態 */
+  --ok: #5ed99e; --warn: #fac053; --err: #fc7f82; --info: #6bcbf7;
+  --vio: #db90ec;
+  /* 圖表 */
+  --ch-req: #1f7dcf; --ch-resp: #59e0ad; --ch-rpt: #fd95dc; --ch-ghost: #2f3033;
+  --ser-1: #63a7fc; --ser-2: #fda669; --ser-3: #59d7b9; --ser-4: #c780f7;
+  --ser-5: #f6d653; --ser-6: #c8cad1;
+  /* 新增：紀錄種類 */
+  --k-req: #6eb7fc; --k-resp: #59e0ad; --k-err: #fc7f82; --k-rpt: #f190dd;
+  /* 新增：列底色 */
+  --ctl-bg: #31220d; --rule-info: #0e2e3c; --rule-ok: #113323; --rule-warn: #362d0d;
+  --rule-err: #401d1e; --rule-vio: #331e38; --rule-accent: #232546; --sel-bg: #2c2e56;
+  --sel-edge: #8d92f9; --changed: #4e2023;
+  --shadow-xs: 0 1px 2px #00000066;
+  --shadow-card: 0 0 0 1px #ffffff0d, 0 1px 3px #00000080;
+  --shadow-pop: 0 0 0 1px #ffffff14, 0 12px 24px #000000b3;
+}
+.app[data-density=dense] { --row-h: 24px; --font-dense: 12.5px; }
+/* ---- D 現代產品感：柔和表面層次、少邊框、適度圓角與陰影、主要動作清楚 -------- */
+body { font-size: var(--font-ui); font-feature-settings: "cv11", "ss01"; }
+.topbar { background: var(--topbar); border-bottom: 0; box-shadow: 0 1px 0 var(--bsoft); padding: 0 14px; }
+.topbar .brand { font-size: 15px; font-weight: 700; letter-spacing: -.01em; margin-right: 6px; }
+.tbtn { background: var(--surface); border-color: var(--border); box-shadow: var(--shadow-xs); font-weight: 500; }
+.tbtn:hover { background: var(--surface2); }
+.tbtn.out { background: var(--accent-solid); border-color: transparent; color: var(--accent-ink); font-weight: 600; box-shadow: var(--shadow-xs); }
+.tbtn.out:hover { background: color-mix(in srgb, var(--accent-solid) 88%, #000); }
+.tbtn.ib, .tbtn.ghost { background: transparent; border-color: transparent; box-shadow: none; }
+.tbtn.ib:hover { background: var(--surface2); }
+.pill { border: 0; padding: 0 12px; font-weight: 500; }
+.pill.ok { background: color-mix(in srgb, var(--ok) 12%, var(--surface)); color: var(--ok); }
+.pill.err { background: color-mix(in srgb, var(--err) 12%, var(--surface)); }
+
+.filterbar { background: var(--topbar); border-bottom: 0; box-shadow: 0 1px 0 var(--bsoft); padding: 0 14px; position: relative; z-index: 1; }
+.flabel { font-weight: 600; color: var(--muted); }
+.fbox { background: var(--surface2); border-color: transparent; border-radius: 10px; padding: 0 6px; }
+.fbox:focus-within { background: var(--surface); outline: 2px solid var(--focus); }
+.fchip { border: 0; background: color-mix(in srgb, var(--accent) 14%, var(--surface)); border-radius: 999px; }
+.fchip-text { color: var(--accent); font-weight: 500; padding: 0 4px 0 10px; }
+.fchip-x { border-left: 0; padding: 0 8px 0 4px; color: var(--accent); }
+.counts b { font-weight: 600; }
+
+/* 總覽：圖與計數各自是一塊柔和的面 */
+.overview { background: var(--bg); border-bottom: 0; padding: 6px 14px 2px; gap: 20px; }
+.hh { font-size: 12px; }
+.trange { font-weight: 500; }
+.hist-plot { background: var(--surface); border: 0; border-radius: 8px; box-shadow: var(--shadow-card); overflow: hidden; }
+.hist-svg { border-radius: 8px; }
+.hist-svg .seg { stroke: var(--surface); stroke-width: 1px; vector-effect: non-scaling-stroke; }
+.hist-legend .sw { border-radius: 3px; }
+.ovcounts { gap: 4px; padding-right: 34px; }
+.crow { height: 20px; gap: 4px; }
+.cnt { height: 20px; background: var(--surface); border-color: transparent; border-radius: 999px; padding: 0 9px; box-shadow: var(--shadow-xs); font-size: 11.5px; }
+.cnt:hover { background: var(--surface2); }
+.cnt[aria-pressed=true] { background: color-mix(in srgb, var(--accent) 14%, var(--surface)); box-shadow: inset 0 0 0 1px var(--accent); }
+.cnt .cnt-n { font-weight: 600; }
+.cnt.static { box-shadow: none; background: transparent; border: 1px dashed var(--border); }
+.clabel { color: var(--muted); font-weight: 500; font-size: 11.5px; }
+.ovt { top: 8px; right: 12px; }
+
+/* 工作區：三張卡片浮在底色上 */
+.workspace { background: var(--bg); padding: 8px 10px 10px; gap: 10px; }
+.treepane, .listwrap, .detail { background: var(--surface); border: 0; border-radius: 12px; box-shadow: var(--shadow-card); overflow: hidden; }
+.listwrap { border-right: 0; }
+.vlist { background: var(--surface); }
+.tree-head, .detail-head { background: var(--surface); border-bottom: 1px solid var(--bsoft); padding: 8px 12px; }
+.tree-head > span:first-child { font-weight: 600; }
+.tree { padding: 6px 0; }
+.tnode { margin: 0 6px; border-left: 0; border-radius: 6px; }
+.tnode.cur { background: var(--nav-active); }
+.tnode.cur .tname { color: var(--accent); font-weight: 600; }
+.tcount { font-size: 11.5px; }
+.hdr { background: var(--surface); border-bottom: 1px solid var(--bsoft); }
+.hcell { border-right-color: transparent; }
+.hbtn { color: var(--muted); font-weight: 500; font-size: 12.5px; padding: 0 10px; }
+.cell { padding: 0 10px; }
+.row { border-bottom-color: var(--bsoft); border-left-width: 3px; }
+.row:hover { background: var(--hover); }
+.row.sel { box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--sel-edge) 55%, transparent); }
+.cell.active { box-shadow: inset 0 0 0 1.5px var(--accent); border-radius: 4px; }
+.kchip { border: 0; padding: 1px 8px; border-radius: 999px; font-weight: 500; }
+.kchip.k-report, .kchip.k-report_header { background: color-mix(in srgb, var(--k-rpt) 13%, var(--surface)); }
+.kchip.k-request, .kchip.k-write { background: color-mix(in srgb, var(--k-req) 13%, var(--surface)); }
+.kchip.k-response { background: color-mix(in srgb, var(--k-resp) 13%, var(--surface)); }
+.kchip.k-error, .kchip.k-reject { background: color-mix(in srgb, var(--k-err) 13%, var(--surface)); }
+.kchip.frame { background: var(--surface2); color: var(--muted); }
+.detail-head .path { font-size: 14px; font-weight: 500; }
+.iconbtn { background: var(--surface); border-color: var(--border); border-radius: 8px; box-shadow: var(--shadow-xs); }
+.iconbtn:hover { background: var(--surface2); }
+.pairing { margin: 10px 12px 4px; border: 0; border-radius: 10px; background: color-mix(in srgb, var(--k-rpt) 8%, var(--surface)); padding: 8px 12px; }
+.ftable th { color: var(--muted); font-weight: 400; padding: 5px 12px; border-bottom-color: transparent; }
+.ftable td { padding: 5px 12px 5px 4px; border-bottom-color: transparent; }
+.ftable tr + tr > th, .ftable tr + tr > td { border-top: 1px solid var(--bsoft); }
+.ftable.nested tr + tr > th, .ftable.nested tr + tr > td { border-top: 0; }
+.detail h4 { margin: 14px 12px 4px; color: var(--text); font-weight: 600; }
+.detail-foot { padding: 6px 12px; }
+
+.statusbar { background: var(--topbar); border-top: 0; box-shadow: 0 -1px 0 var(--bsoft); padding: 0 14px; }
+.statusbar .jump { height: 26px; border-radius: 8px; background: var(--surface2); border-color: transparent; }
+.segc { background: var(--surface2); border: 0; border-radius: 8px; padding: 2px; gap: 2px; }
+.segc button { border: 0; border-radius: 6px; height: 22px; padding: 0 9px; }
+.segc button[aria-pressed=true] { background: var(--surface); box-shadow: var(--shadow-xs); font-weight: 600; }
+.sep { background: var(--bsoft); }
+kbd { background: var(--surface2); border: 0; border-radius: 4px; color: var(--muted); }
+.tbtn[aria-expanded=true], .tbtn[aria-pressed=true] { background: color-mix(in srgb, var(--accent) 12%, var(--surface)); border-color: transparent; color: var(--accent); }
+
+.row[class*="rule-"] .c-row::before { margin-right: auto; width: 16px; height: 16px; border-radius: 50%; font: 600 10px/16px var(--sans); text-align: center; background: var(--surface); color: var(--text); box-shadow: var(--shadow-xs); }
+.row.rule-info .c-row::before { content: "藍"; }
+.row.rule-ok .c-row::before { content: "綠"; }
+.row.rule-warn .c-row::before { content: "黃"; }
+.row.rule-err .c-row::before { content: "紅"; }
+.row.rule-vio .c-row::before { content: "紫"; }
+.row.rule-accent .c-row::before { content: "強"; }
+
+/* ---- F：方案 1 的頂部兩列套 D 的樣式；淺色是 A 的灰 ------------------------- */
+.topbar, .filterbar { padding: 0 12px; }
+.appbtn .logo { border-radius: 6px; }
+.srcchip { background: color-mix(in srgb, var(--surface) 55%, transparent); border-radius: 999px; padding: 0 12px 0 10px; }
+.srcchip:hover, .srcchip[aria-expanded="true"] { background: var(--surface); border-color: transparent; box-shadow: var(--shadow-xs); }
+.qbtn:hover, .qbtn[aria-expanded="true"] { border-color: transparent; }
+.kbtn kbd, .fbox .qapply kbd { border: 0; background: var(--surface2); color: var(--muted); }
+.ststat .st, .srcchip .st { box-shadow: 0 0 0 3px color-mix(in srgb, var(--ok) 22%, transparent); }
+.fbox { background: var(--input); border: 1px solid var(--bsoft); border-radius: 10px; box-shadow: inset 0 1px 1px #0000000a; }
+.fbox:focus-within { background: var(--input); }
+.fbox .qapply { border: 0; border-radius: 7px; background: var(--accent-solid); color: var(--accent-ink); font-weight: 600; }
+.fbox .qapply:disabled { background: var(--surface2); color: var(--muted); opacity: 1; }
+.qcount { font-size: 12.5px; }
+.statusbar .qbtn { border-radius: 7px; }
+.demo-pop { border-color: var(--bsoft); border-radius: 12px; }
+
+/* round 2：bytes 強調位元組、時間序列 chip（文字不用系列色，系列色只當框與色塊） */
+.hexrow .b.selh { background: var(--accent-solid); color: var(--accent-ink); }
+.ts-bar .fchip { background: var(--surface); }
+.ts-bar .fchip .sw { margin: 0 0 0 7px; align-self: center; border-radius: 3px; }
+.ts-bar .fchip-text { color: var(--text); }
+

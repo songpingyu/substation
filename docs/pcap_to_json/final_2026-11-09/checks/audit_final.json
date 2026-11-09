@@ -1,0 +1,86 @@
+{
+ "F-main-light": {
+  "texts": 412,
+  "min": 5.08,
+  "at": "div.detail-head > span.dh-id > span.kchip.k-report | report",
+  "errors": []
+ },
+ "F-main-dark": {
+  "texts": 412,
+  "min": 4.56,
+  "at": "header.topbar > button.qbtn.appbtn > span.logo | MMS",
+  "errors": []
+ },
+ "F-bytes-light": {
+  "texts": 890,
+  "min": 5.08,
+  "at": "div.detail-head > span.dh-id > span.kchip.k-report | report",
+  "errors": []
+ },
+ "F-bytes-dark": {
+  "texts": 890,
+  "min": 4.56,
+  "at": "header.topbar > button.qbtn.appbtn > span.logo | MMS",
+  "errors": []
+ },
+ "F-blank-light": {
+  "texts": 37,
+  "min": 5.48,
+  "at": "div.dz > div.dsum > button.link | 改設定…",
+  "errors": []
+ },
+ "F-blank-dark": {
+  "texts": 37,
+  "min": 4.56,
+  "at": "header.topbar > button.qbtn.appbtn > span.logo | MMS",
+  "errors": []
+ },
+ "F-compare-light": {
+  "texts": 209,
+  "min": 4.84,
+  "at": "div.cmp-rows > div.cmp-row.sel > span.err | ≠ 值不同",
+  "errors": []
+ },
+ "F-compare-dark": {
+  "texts": 209,
+  "min": 4.56,
+  "at": "header.topbar > button.qbtn.appbtn > span.logo | MMS",
+  "errors": []
+ },
+ "F-export-light": {
+  "texts": 435,
+  "min": 5.08,
+  "at": "div.detail-head > span.dh-id > span.kchip.k-report | report",
+  "errors": []
+ },
+ "F-export-dark": {
+  "texts": 435,
+  "min": 4.56,
+  "at": "header.topbar > button.qbtn.appbtn > span.logo | MMS",
+  "errors": []
+ },
+ "F-quality-light": {
+  "texts": 392,
+  "min": 5.08,
+  "at": "div.detail-head > span.dh-id > span.kchip.k-report | report",
+  "errors": []
+ },
+ "F-quality-dark": {
+  "texts": 392,
+  "min": 4.56,
+  "at": "header.topbar > button.qbtn.appbtn > span.logo | MMS",
+  "errors": []
+ },
+ "F-timeseries-light": {
+  "texts": 401,
+  "min": 5.08,
+  "at": "div.detail-head > span.dh-id > span.kchip.k-report | report",
+  "errors": []
+ },
+ "F-timeseries-dark": {
+  "texts": 401,
+  "min": 4.56,
+  "at": "header.topbar > button.qbtn.appbtn > span.logo | MMS",
+  "errors": []
+ }
+}
