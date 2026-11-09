@@ -1,0 +1,108 @@
+/* ==========================================================================
+   頂部重設計 v3：一個物件一個控制項。只用 tokens.css 的變數，任何風格方向都能套。
+   ========================================================================== */
+
+/* ---- 共用：無框的「屬性」按鈕（像文件標題列，不像一排按鈕） ---- */
+.qbtn { display: inline-flex; align-items: center; gap: 6px; height: var(--h-ctl); padding: 0 8px; border: 1px solid transparent; border-radius: var(--r); background: transparent; color: var(--text); font-size: var(--font-chrome); white-space: nowrap; cursor: pointer; flex: none; }
+.qbtn:hover, .qbtn[aria-expanded="true"] { background: var(--hover); border-color: var(--bsoft); }
+.qbtn .chev { color: var(--muted); width: 12px; height: 12px; }
+.qbtn .muted { color: var(--muted); }
+
+/* App 選單鈕（取代品牌字＋?＋主題＋版本＋開啟檔案） */
+.appbtn { font-weight: 700; font-size: 14px; padding-left: 6px; }
+.appbtn .logo { width: 20px; height: 20px; border-radius: 5px; background: var(--accent-solid); color: var(--accent-ink); display: grid; place-items: center; font: 700 11px/1 var(--mono); letter-spacing: -.02em; flex: none; }
+.appbtn.icononly { padding: 0 6px; }
+
+/* 來源晶片（取代 檔名＋2 連線＋解碼設定＋解析狀態） */
+.srcchip { min-width: 0; flex: 0 0 auto; max-width: 520px; }
+.srcchip .nm { flex: 0 0 auto; }
+.srcchip .meta { flex: 0 1 auto; }
+.srcchip .meta::before { content: "·"; margin: 0 6px 0 2px; color: var(--muted); }
+.srcchip .ic { color: var(--muted); }
+.srcchip .nm { font-family: var(--mono); font-size: 12.5px; font-weight: 600; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+.srcchip .meta { color: var(--muted); font-size: 12.5px; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+.srcchip .meta b { color: var(--text); font-family: var(--mono); font-weight: 600; }
+.srcchip .st { width: 8px; height: 8px; border-radius: 50%; background: var(--ok); flex: none; }
+.srcchip.err .st { background: var(--err); }
+.srcchip.err { color: var(--err); border-color: var(--err); }
+.vsep { width: 1px; height: 20px; background: var(--border); flex: none; }
+
+/* 狀態（列 1 右側；單列方案收進來源晶片的小圓點） */
+.ststat { color: var(--muted); font-size: 12.5px; white-space: nowrap; display: inline-flex; align-items: center; gap: 6px; }
+.ststat b { color: var(--text); font-family: var(--mono); font-weight: 600; }
+.ststat .st { width: 8px; height: 8px; border-radius: 50%; background: var(--ok); }
+
+/* ⌘K 指令鈕 */
+.kbtn { color: var(--muted); gap: 8px; }
+.kbtn kbd { font-size: 11px; }
+
+/* ---- 查詢列：篩選 ▾（最近＋書籤）｜條件框（套用收進框內）｜結果數 ---- */
+.qmenu { font-weight: 600; padding-left: 4px; }
+.qmenu .ic { color: var(--muted); }
+.fbox .qapply { flex: none; height: calc(var(--h-ctl) - 8px); padding: 0 10px; border-radius: calc(var(--r) - 2px); border: 1px solid var(--border); background: var(--surface); color: var(--text); font-size: 12px; display: inline-flex; align-items: center; gap: 5px; cursor: pointer; }
+.fbox .qapply:disabled { opacity: .55; cursor: default; }
+.fbox .qapply kbd { font-size: 10.5px; padding: 0 3px; }
+.qcount { color: var(--muted); font-size: 13px; white-space: nowrap; flex: none; }
+.qcount b { color: var(--text); font-family: var(--mono); font-weight: 600; font-variant-numeric: tabular-nums; }
+
+/* 單列：條件框加大成主角 */
+.topbar.cmdbar { gap: 6px; }
+.topbar.cmdbar .fbox { flex: 1 1 0; min-width: 360px; height: 34px; }
+.topbar.cmdbar .fbox:focus-within { outline-offset: -1px; }
+
+/* ---- 列表工具列（底部）：時間 ▾｜顯示 ▾｜匯出… ---- */
+.statusbar .qbtn { height: var(--h-ctl-sm); font-size: 12.5px; padding: 0 6px; }
+.statusbar .qbtn .muted { font-size: 12px; }
+
+/* ---- 打開狀態的示意（選單 / 面板 / 指令面板） ---- */
+.demo-pop { position: fixed; z-index: 90; background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-lg); box-shadow: var(--shadow-pop); font-size: 13px; color: var(--text); padding: 6px; min-width: 260px; }
+.demo-pop .ph { padding: 6px 10px 4px; font-size: 11.5px; color: var(--muted); font-weight: 600; }
+.demo-pop .it { display: flex; align-items: center; gap: 10px; padding: 6px 10px; border-radius: 6px; white-space: nowrap; }
+.demo-pop .it.hl { background: var(--hover); }
+.demo-pop .it .grow { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+.demo-pop .it .k { color: var(--muted); font-size: 12px; }
+.demo-pop .it .ic { color: var(--muted); }
+.demo-pop .sep { height: 1px; background: var(--border); margin: 5px 2px; }
+.demo-pop .seg2 { display: inline-flex; border: 1px solid var(--border); border-radius: 6px; overflow: hidden; }
+.demo-pop .seg2 span { padding: 2px 9px; border-right: 1px solid var(--border); font-size: 12px; }
+.demo-pop .seg2 span:last-child { border-right: 0; }
+.demo-pop .seg2 span.on { background: var(--nav-active); font-weight: 600; }
+.demo-pop .kv { display: grid; grid-template-columns: 64px minmax(0, 1fr) auto; gap: 8px 10px; align-items: center; padding: 6px 10px; }
+.demo-pop .kv .l { color: var(--muted); }
+.demo-pop .kv .v { min-width: 0; }
+.demo-pop .kv .v .mono { font-weight: 600; }
+.demo-pop .lnk { color: var(--accent); white-space: nowrap; }
+.demo-pop .hd { display: flex; align-items: center; gap: 8px; padding: 8px 10px 6px; }
+.demo-pop .hd .nm { font-family: var(--mono); font-weight: 700; font-size: 13.5px; }
+.demo-pop .note { padding: 4px 10px 6px; font-size: 12px; color: var(--muted); }
+.demo-back { position: fixed; inset: 0; z-index: 85; background: color-mix(in srgb, var(--bg) 55%, transparent); }
+.demo-pal { position: fixed; z-index: 95; left: 50%; top: 96px; transform: translateX(-50%); width: 620px; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; box-shadow: 0 18px 50px #0000004d; overflow: hidden; }
+.demo-pal .in { display: flex; align-items: center; gap: 10px; padding: 12px 14px; border-bottom: 1px solid var(--border); font-size: 15px; color: var(--muted); }
+.demo-pal .list { padding: 6px; font-size: 13.5px; }
+.demo-pal .it.hl { background: var(--hover); }
+.demo-pal .grp { padding: 8px 10px 3px; font-size: 11.5px; color: var(--muted); font-weight: 600; }
+
+/* ---- 方案 3：總覽變成一條直方圖帶，計數移到左欄「統計」分頁 ---- */
+.overview.strip { height: 64px; grid-template-columns: 290px minmax(0, 1fr) auto auto auto; gap: 14px; align-items: center; padding: 6px 12px; }
+.overview.strip .hist { display: contents; }
+.overview.strip .hh { flex-direction: column; align-items: flex-start; gap: 0; line-height: 18px; white-space: normal; }
+.overview.strip .hist-plot { height: 50px; }
+.overview.strip .hist-legend { display: grid; grid-template-columns: auto auto; column-gap: 14px; row-gap: 2px; line-height: 16px; }
+.overview.strip .hist-legend .hint { display: none; }
+.overview.strip .ovt { position: static; }
+.overview.strip .qwarn { background: transparent; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; color: var(--warn); border: 1px solid color-mix(in srgb, var(--warn) 45%, transparent); border-radius: 999px; padding: 2px 10px; white-space: nowrap; }
+.ptabs { display: flex; gap: 2px; align-items: flex-end; }
+.ptab { border: 0; background: transparent; padding: 3px 8px 4px; font: 600 13px var(--sans); color: var(--muted); border-bottom: 2px solid transparent; cursor: pointer; }
+.ptab.on { color: var(--text); border-bottom-color: var(--accent); }
+.facets { padding: 6px 10px 10px; overflow: auto; font-size: 12.5px; display: flex; flex-direction: column; gap: 10px; }
+.facets .fg h5 { margin: 0 0 3px; font-size: 11.5px; color: var(--muted); font-weight: 600; display: flex; justify-content: space-between; }
+.facets .fr { display: grid; grid-template-columns: minmax(0, 1fr) 40px 52px; align-items: center; gap: 8px; height: 22px; padding: 0 4px; border-radius: 4px; }
+.facets .fr:hover { background: var(--hover); }
+.facets .fr .k { font-family: var(--mono); min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.facets .fr .n { text-align: right; font-family: var(--mono); font-weight: 600; font-variant-numeric: tabular-nums; }
+.facets .fr .bar { flex: none; width: 36px; height: 4px; border-radius: 2px; background: var(--surface2); overflow: hidden; }
+.facets .fr .bar i { display: block; height: 100%; background: var(--accent); }
+.facets .fr.warn .k, .facets .fr.warn .n { color: var(--warn); }
+.facets .fr.info .k { color: var(--info); }
+.facets .fr.ok .k { color: var(--ok); }
+.facets .fr.vio .k { color: var(--vio); }

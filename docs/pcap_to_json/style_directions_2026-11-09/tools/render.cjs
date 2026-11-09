@@ -1,5 +1,5 @@
 // Render the static snapshot with optional direction CSS, collect layout + contrast metrics.
-// usage: node render.cjs jobs.json
+// usage: node render.js jobs.json
 // jobs.json: { root, snapshot, jobs: [{ id, css: [relpath...], theme, w, h, out, metrics }] }
 const { chromium } = require('playwright');
 const fs = require('fs');
@@ -197,6 +197,7 @@ async function contrastAudit(page) {
     const rows = await fixRows(page);
     await page.evaluate(() => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r))));
     await page.evaluate(async () => { await document.fonts.ready; });
+    if (job.post) { await page.evaluate(job.post); await page.evaluate(() => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)))); }
     const m = job.metrics === false ? null : await metrics(page);
     const audit = job.audit ? await contrastAudit(page) : null;
     if (job.out) {

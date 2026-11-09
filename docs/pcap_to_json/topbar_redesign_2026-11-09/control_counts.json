@@ -1,0 +1,46 @@
+{
+ "現況": {
+  "top": {
+   "controls": 15,
+   "bordered": 13
+  },
+  "bottom": {
+   "controls": 8,
+   "bordered": 8
+  },
+  "hdrY": 196
+ },
+ "P1": {
+  "top": {
+   "controls": 7,
+   "bordered": 1
+  },
+  "bottom": {
+   "controls": 7,
+   "bordered": 4
+  },
+  "hdrY": 194
+ },
+ "P2": {
+  "top": {
+   "controls": 6,
+   "bordered": 1
+  },
+  "bottom": {
+   "controls": 7,
+   "bordered": 4
+  },
+  "hdrY": 160
+ },
+ "P3": {
+  "top": {
+   "controls": 7,
+   "bordered": 1
+  },
+  "bottom": {
+   "controls": 7,
+   "bordered": 4
+  },
+  "hdrY": 146
+ }
+}
