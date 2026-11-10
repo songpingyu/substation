@@ -142,13 +142,46 @@ w('''## §5 檢查 / Checks
 | `%s/F_main_{light,dark}.png`、`F_1280_{light,dark}.png`、`F_1920_light.png` | 主畫面 |
 | `%s/F_{bytes,blank,compare,export,quality,timeseries}_{light,dark}.png` | 各狀態 |
 | `%s/swatch_F.png` | 色票 |
+| `shots/final_2026-11-09/F_menu_{src,app,qmenu,disp,pal}_{light,dark}.png` | 頂部選單展開（定稿樣式，§9） |
 | `%s/01_*.png` … `09_*.png` | 參考截圖（現況） |
 | `%s/css/` | `F.css`（變數＋元件）、`topbar_v3.css`、`_v2_layer.css`、`_v2_fixes.css` |
-| `%s/tools/` | `states.py`（照參考圖重建狀態）、`shoot_final.py`（渲染與檢查）、說明 |
+| `%s/tools/` | `states.py`（照參考圖重建狀態）、`shoot_final.py`（渲染與檢查）、`shoot_final_menus.py`（頂部選單展開圖）、說明 |
 | `%s/checks/` | `token_check_F.json`、`audit_final.json`、`render_log.txt` |
 ''' % (v('light', 'text'), v('light', 'status_text'), v('light', 'focus'), v('light', 'chart'), v('light', 'series'), v('light', 'cvd_chart'), v('light', 'tints_normal'),
        v('dark', 'text'), v('dark', 'status_text'), v('dark', 'focus'), v('dark', 'chart'), v('dark', 'series'), v('dark', 'cvd_chart'), v('dark', 'tints_normal'),
        AUD['F-main-light']['min'], AUD['F-main-dark']['min'], SH, SH, SH, REF, DIRN, DIRN, DIRN))
+
+CANVAS_PAGES = [
+    ('交接總覽', 'page-31d4f62b7494', '交接總覽、變數表、CSS 套用順序與 class 清單、功能搬家對照與快捷鍵、元件色票'),
+    ('主畫面 1440', 'page-2e9cfe98992d', '目標淺 / 深；現況 01、02'),
+    ('寬度 1280 / 1920', 'page-c318040d3362', '1280 淺 / 深、1920 淺'),
+    ('頂部選單（方案 1）', 'page-3692d9df7020', '來源面板、App 選單、篩選 ▾、顯示 ▾、指令面板，各淺 / 深'),
+    ('bytes 檢視', 'page-06e43bb52715', '目標淺 / 深；現況 06'),
+    ('空白頁＋解碼面板', 'page-c8adb70cba97', '目標淺 / 深；現況 07'),
+    ('比對', 'page-8d008970fb32', '目標淺 / 深；現況 08'),
+    ('匯出對話框', 'page-9c360625c5e0', '目標淺 / 深；現況 09'),
+    ('品質', 'page-fb278dc9b08b', '目標淺 / 深；現況 05'),
+    ('時間序列', 'page-c0517a91f1d7', '目標淺 / 深；現況 03、04'),
+]
+MENUS = [('src', '來源面板'), ('app', 'App 選單'), ('qmenu', '篩選 ▾（書籤＋最近）'), ('disp', '顯示 ▾'), ('pal', '指令面板（Ctrl+K）')]
+L.append('## §9 設計畫布 / Canvas')
+L.append('')
+L.append('交接用的設計畫布：<https://claude.ai/artifact/WQmPQJqUDCJxNV8vQF9Cuz>（私人；要給別人或另一個 Claude Code 工作階段看，先從畫布的 Share 分享）。'
+         '第一張畫板「交接總覽」列出全部 41 張畫板的檔名與 `#artboard-…` 錨點，原始 CSS 也放在畫布附件裡。各頁的錨點（接在畫布網址後面）：')
+L.append('')
+L.append('| 頁面 | 錨點 | 內容 |')
+L.append('|---|---|---|')
+for name, anchor, what in CANVAS_PAGES:
+    L.append('| %s | `#%s` | %s |' % (name, anchor, what))
+L.append('')
+L.append('**頂部選單（定稿樣式）**：[頂部重設計](topbar_redesign_2026-11-09.md)的展開圖是用現在的配色畫的，這裡用定稿 F 重畫（`%s/tools/shoot_final_menus.py`）；'
+         '「顯示 ▾」的列高改讀 `--row-h`，所以顯示 30 / 24。' % DIRN)
+L.append('')
+L.append('| | 淺色 | 深色 |')
+L.append('|---|---|---|')
+for key, name in MENUS:
+    L.append('| %s | ![%s 淺色](%s/F_menu_%s_light.png) | ![%s 深色](%s/F_menu_%s_dark.png) |' % (name, name, SH, key, name, SH, key))
+L.append('')
 
 open(OUT, 'w', encoding='utf-8').write('\n'.join(L))
 print('wrote', OUT)

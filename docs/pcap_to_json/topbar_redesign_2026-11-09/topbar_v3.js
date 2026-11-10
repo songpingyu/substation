@@ -224,10 +224,13 @@ window.__tb3 = (() => {
     }
     if (open === 'disp') {
       const segBtns = $$('button', S.segc).map((b) => `<span class="${b.getAttribute('aria-pressed') === 'true' ? 'on' : ''}">${b.textContent}</span>`).join('');
+      const appEl = document.querySelector('.app') || document.documentElement;
+      const rowStd = parseFloat(getComputedStyle(appEl).getPropertyValue('--row-h')) || 32;
+      const rowDense = (() => { const d = appEl.getAttribute('data-density'); appEl.setAttribute('data-density', 'dense'); const v = parseFloat(getComputedStyle(appEl).getPropertyValue('--row-h')) || 24; if (d === null) appEl.removeAttribute('data-density'); else appEl.setAttribute('data-density', d); return v; })();
       const p = el('div', 'demo-pop', `
         <div class="ph">顯示</div>
         <div class="it">${I.clock}<span class="grow">時間</span><span class="seg2">${segBtns}</span></div>
-        <div class="it">${I.rows}<span class="grow">列高</span><span class="seg2"><span class="on">標準 32</span><span>密集 24</span></span></div>
+        <div class="it">${I.rows}<span class="grow">列高</span><span class="seg2"><span class="on">標準 ${rowStd}</span><span>密集 ${rowDense}</span></span></div>
         <div class="sep"></div>
         <div class="it">${I.cols}<span class="grow">欄位…</span></div>
         <div class="it">${I.paint}<span class="grow">著色規則…</span><span class="k">篩選 → 顏色</span></div>
